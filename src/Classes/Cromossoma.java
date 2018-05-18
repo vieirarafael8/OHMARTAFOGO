@@ -129,7 +129,10 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
         int finx = c.getEnd().getX();
         int finy = c.getEnd().getY();
         
-        return ;
+       
+        double dist= (Math.sqrt(Math.pow(finx-initx,2)+ Math.pow(finy-inity,2)));
+        
+        return dist;
         
     }
 
