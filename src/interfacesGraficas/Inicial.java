@@ -366,7 +366,11 @@ public class Inicial extends javax.swing.JFrame {
     }//GEN-LAST:event_insertYPontoFinalActionPerformed
 
     private void insertAlturaCenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAlturaCenActionPerformed
-        // TODO add your handling code here:
+        
+        
+        
+        config.setWidth();
+        
     }//GEN-LAST:event_insertAlturaCenActionPerformed
 
     private void insetLarguraCenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insetLarguraCenActionPerformed
