@@ -107,7 +107,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <Component id="larguraCenario" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="insetLarguraCen" min="-2" pref="42" max="-2" attributes="0"/>
+                              <Component id="insertLarguraCen" min="-2" pref="42" max="-2" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <Group type="103" groupAlignment="1" attributes="0">
@@ -170,7 +170,7 @@
                       <EmptySpace pref="202" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="larguraCenario" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="insetLarguraCen" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="insertLarguraCen" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="pontoFinal" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
@@ -223,9 +223,9 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertAlturaCenActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JTextField" name="insetLarguraCen">
+    <Component class="javax.swing.JTextField" name="insertLarguraCen">
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insetLarguraCenActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertLarguraCenActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel3">
@@ -327,6 +327,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="insertXPontoFinal">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="insertXPontoFinalActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel10">
       <Properties>

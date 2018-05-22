@@ -6,6 +6,7 @@
 package interfacesGraficas;
 
 import Classes.Configuration;
+import Classes.Jenetic;
 import Classes.Point;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +19,7 @@ public class Inicial extends javax.swing.JFrame {
 
     private Point point;
     private Configuration config;
+    private Jenetic jen;
     /**
      * Creates new form Inicial
      */
@@ -45,7 +47,7 @@ public class Inicial extends javax.swing.JFrame {
         alturaCenario = new javax.swing.JLabel();
         larguraCenario = new javax.swing.JLabel();
         insertAlturaCen = new javax.swing.JTextField();
-        insetLarguraCen = new javax.swing.JTextField();
+        insertLarguraCen = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         insertXPontoInicial = new javax.swing.JTextField();
@@ -86,9 +88,9 @@ public class Inicial extends javax.swing.JFrame {
             }
         });
 
-        insetLarguraCen.addActionListener(new java.awt.event.ActionListener() {
+        insertLarguraCen.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insetLarguraCenActionPerformed(evt);
+                insertLarguraCenActionPerformed(evt);
             }
         });
 
@@ -131,6 +133,12 @@ public class Inicial extends javax.swing.JFrame {
         pontoFinal.setText("Ponto Final:");
 
         jLabel9.setText("X:");
+
+        insertXPontoFinal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertXPontoFinalActionPerformed(evt);
+            }
+        });
 
         jLabel10.setText("Y:");
 
@@ -219,7 +227,7 @@ public class Inicial extends javax.swing.JFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(larguraCenario)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(insetLarguraCen, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(insertLarguraCen, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(cruzamentos)
@@ -264,7 +272,7 @@ public class Inicial extends javax.swing.JFrame {
                         .addContainerGap(202, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(larguraCenario)
-                            .addComponent(insetLarguraCen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(insertLarguraCen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(pontoFinal))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -302,7 +310,7 @@ public class Inicial extends javax.swing.JFrame {
 
     private void  verificarValores(){
         String alturaCen= insertAlturaCen.getText();
-        String largCen=insetLarguraCen.getText();
+        String largCen=insertLarguraCen.getText();
         String mutacoes = (String) muta.getValue();
         
         String cruzamentos= insertCruzamentos.getText();
@@ -323,7 +331,7 @@ public class Inicial extends javax.swing.JFrame {
     }
     
     private Point criarPontoInicial (){
-        String xPontoInicial= insertXPontoFinal.getText();
+        String xPontoInicial= insertXPontoInicial.getText();
         String yPontoIncial= insertYPontoInicial.getText();
         Point pi= null;
         
@@ -358,36 +366,51 @@ public class Inicial extends javax.swing.JFrame {
     
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
+    dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void insertYPontoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertYPontoFinalActionPerformed
-        // TODO add your handling code here:
+        config.setEnd(criarPontoFinal());
+        
     }//GEN-LAST:event_insertYPontoFinalActionPerformed
 
     private void insertAlturaCenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAlturaCenActionPerformed
         
-        
-        
-        config.setWidth();
-        
+        String alturaCen = insertAlturaCen.getText();
+        int altura = Integer.parseInt(alturaCen);
+        config.setHeight(altura);
+         
     }//GEN-LAST:event_insertAlturaCenActionPerformed
 
-    private void insetLarguraCenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insetLarguraCenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_insetLarguraCenActionPerformed
+    private void insertLarguraCenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertLarguraCenActionPerformed
+        String larguraCen = insertLarguraCen.getText();
+        int largura = Integer.parseInt(larguraCen);
+        config.setWidth(largura);
+    }//GEN-LAST:event_insertLarguraCenActionPerformed
 
     private void insertSolucoesAleatoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertSolucoesAleatoriasActionPerformed
-        // TODO add your handling code here:
+        String solucoesAleatorias= insertSolucoesAleatorias.getText();
+        int solAl = Integer.parseInt(solucoesAleatorias);
+        jen.setRandomSize(solAl);
     }//GEN-LAST:event_insertSolucoesAleatoriasActionPerformed
 
     private void insertCruzamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertCruzamentosActionPerformed
-        // TODO add your handling code here:
+        String cruzamentos= insertCruzamentos.getText();
+        int cruza = Integer.parseInt(cruzamentos);
+        jen.setCrossoverSize(cruza);
     }//GEN-LAST:event_insertCruzamentosActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
+    private void insertIteracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertIteracoesActionPerformed
+        String iteracoes= insertIteracoes.getText();
+        int itera = Integer.parseInt(iteracoes);
+        jen.setCrossoverSize(itera);
+    }//GEN-LAST:event_insertIteracoesActionPerformed
+
+    private void insertXPontoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertXPontoFinalActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_insertXPontoFinalActionPerformed
+
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -427,12 +450,12 @@ public class Inicial extends javax.swing.JFrame {
     private javax.swing.JTextField insertAlturaCen;
     private javax.swing.JTextField insertCruzamentos;
     private javax.swing.JTextField insertIteracoes;
+    private javax.swing.JTextField insertLarguraCen;
     private javax.swing.JTextField insertSolucoesAleatorias;
     private javax.swing.JTextField insertXPontoFinal;
     private javax.swing.JTextField insertXPontoInicial;
     private javax.swing.JTextField insertYPontoFinal;
     private javax.swing.JTextField insertYPontoInicial;
-    private javax.swing.JTextField insetLarguraCen;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

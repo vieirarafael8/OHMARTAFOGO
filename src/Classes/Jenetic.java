@@ -29,21 +29,84 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     private int crossoverSize;
     private int mutationSize;
     private int maxIterations;
-    private double deltaMin;
     private double mutationFactor;
     private int iteration;
     private List<List<IChromosome>> historic;
 
-    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double deltaMin, double mutationFactor, int iteration, List<List<IChromosome>> historic) {
+    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations,double mutationFactor, int iteration) {
         this.populationSize = populationSize;
         this.randomSize = randomSize;
         this.crossoverSize = crossoverSize;
         this.mutationSize = mutationSize;
         this.maxIterations = maxIterations;
-        this.deltaMin = deltaMin;
         this.mutationFactor = mutationFactor;
         this.iteration = 0;
         this.historic = new ArrayList<>(populationSize);
+       
+    }
+
+    public int getPopulationSize() {
+        return populationSize;
+    }
+
+    public void setPopulationSize(int populationSize) {
+        this.populationSize = populationSize;
+    }
+
+    public int getRandomSize() {
+        return randomSize;
+    }
+
+    public void setRandomSize(int randomSize) {
+        this.randomSize = randomSize;
+    }
+
+    public int getCrossoverSize() {
+        return crossoverSize;
+    }
+
+    public void setCrossoverSize(int crossoverSize) {
+        this.crossoverSize = crossoverSize;
+    }
+
+    public int getMutationSize() {
+        return mutationSize;
+    }
+
+    public void setMutationSize(int mutationSize) {
+        this.mutationSize = mutationSize;
+    }
+
+    public int getMaxIterations() {
+        return maxIterations;
+    }
+
+    public void setMaxIterations(int maxIterations) {
+        this.maxIterations = maxIterations;
+    }
+
+    public double getMutationFactor() {
+        return mutationFactor;
+    }
+
+    public void setMutationFactor(double mutationFactor) {
+        this.mutationFactor = mutationFactor;
+    }
+
+    public int getIteration() {
+        return iteration;
+    }
+
+    public void setIteration(int iteration) {
+        this.iteration = iteration;
+    }
+
+    public List<List<IChromosome>> getHistoric() {
+        return historic;
+    }
+
+    public void setHistoric(List<List<IChromosome>> historic) {
+        this.historic = historic;
     }
     
     
@@ -131,6 +194,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
 
             historic.add(population);
 
+         
             iteration++;
         }while(!canStop());
 

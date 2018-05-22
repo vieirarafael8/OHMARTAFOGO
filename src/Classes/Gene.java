@@ -16,17 +16,13 @@ public class Gene implements jenetic.interfaces.IGene{
     private Point p;
     private Configuration c;
 
-    public Gene() {
-    }
-
-    
     
     public Gene(Point p) {
         this.p = p;
     }
 
-    public Gene(Point p, Configuration c) {
-        
+    public Gene(Configuration c) {
+        this.c = c;
         int minX = 0;
         int maxX = c.getWidth();
         int minY = 0;
@@ -35,6 +31,10 @@ public class Gene implements jenetic.interfaces.IGene{
         int y = minY + (maxY - minY) * new Random().nextInt();
         this.p = new Point(x, y);
         
+    }
+
+    Gene() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
     @Override

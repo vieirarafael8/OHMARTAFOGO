@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 import jenetic.interfaces.IChromosome;
 import jenetic.interfaces.IGene;
+import jenetic.interfaces.IPoint;
 
 /**
  *
@@ -22,16 +23,39 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
     private List<IGene> genes;
     private Configuration c;
 
-    public Cromossoma(int maxSize, int minSize) {
+    public Cromossoma(int maxSize, int minSize, Configuration c) {
+        this.c =c;
         this.maxSize = maxSize;
         this.minSize = minSize;
-      
+         genes = new ArrayList<>();
+       IPoint init = c.getStart();
+        IPoint end = c.getEnd();
+        IGene geneI = new Gene((Point) init);
+        IGene geneF = new Gene((Point) end);
+        IPoint geneP  =null;
+         genes.add(new Gene());
         int size = new Random().nextInt(maxSize +1 - minSize) + minSize;
-        genes = new ArrayList<>();
-        for(int i=0; i<size; i++){
-        genes.add(new Gene());
+       
+      //  for(int i=0; i<size; i++){
+       
+       int x=0;
+       int minX = init.getX();
+       int maxX = end.getX();
+       int minY = init.getY();
+       int maxY = end.getY();
+       do {
+           int j = new Random().nextInt(maxX+1-minX)+minX;
+           int i = new Random().nextInt(maxY+1-minY)+minY;
+           IPoint PointNovo = new Point(j, i);
+           Gene NovoGene= new Gene((Point) PointNovo);
+           genes.add(NovoGene);
+           minX=PointNovo.getX();
+           minY = PointNovo.getY();
+           x++;
+       }while(x<size-1);
+        genes.add(geneF);
+        
     
-    }
     }
 
     public Cromossoma(Cromossoma other, IGene gene) {
@@ -44,6 +68,11 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
         this.maxSize=aThis.maxSize;
         this.minSize=aThis.minSize;
        this.genes = aThis.getGenes();
+    }
+
+    public Cromossoma(int maxSize, int minSize) {
+        this.maxSize = maxSize;
+        this.minSize = minSize;
     }
     
     
