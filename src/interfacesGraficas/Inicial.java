@@ -8,8 +8,12 @@ package interfacesGraficas;
 import Classes.Configuration;
 import Classes.Jenetic;
 import Classes.Point;
+import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JTable;
+import javax.swing.plaf.basic.BasicTextUI;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -98,6 +102,12 @@ public class Inicial extends javax.swing.JFrame {
 
         jLabel4.setText("Y:");
 
+        insertXPontoInicial.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertXPontoInicialActionPerformed(evt);
+            }
+        });
+
         insertYPontoInicial.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertYPontoInicialActionPerformed(evt);
@@ -151,6 +161,12 @@ public class Inicial extends javax.swing.JFrame {
         jLabel11.setText("Mutações: ");
 
         jLabel12.setText("Iterações:");
+
+        insertIteracoes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                insertIteracoesActionPerformed(evt);
+            }
+        });
 
         cruzamentos.setText("Cruzamentos:");
 
@@ -305,7 +321,7 @@ public class Inicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void insertYPontoInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertYPontoInicialActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_insertYPontoInicialActionPerformed
 
     private void  verificarValores(){
@@ -341,6 +357,7 @@ public class Inicial extends javax.swing.JFrame {
             int xinit = Integer.parseInt(xPontoInicial);
            int yinit = Integer.parseInt(yPontoIncial);
           pi=new Point(xinit, yinit);
+          config.setStart(pi);
         }
         
         return pi;
@@ -358,19 +375,20 @@ public class Inicial extends javax.swing.JFrame {
            int xfinal = Integer.parseInt(xPontoFinal);
            int yfinal = Integer.parseInt(yPontoFinal);
           pf=new Point(xfinal, yfinal);
+          config.setEnd(pf);
         }
-        
         return pf;
+        
     }
     
     
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-    dispose();
+        dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void insertYPontoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertYPontoFinalActionPerformed
-        config.setEnd(criarPontoFinal());
+        
         
     }//GEN-LAST:event_insertYPontoFinalActionPerformed
 
@@ -406,8 +424,12 @@ public class Inicial extends javax.swing.JFrame {
         jen.setCrossoverSize(itera);
     }//GEN-LAST:event_insertIteracoesActionPerformed
 
+    private void insertXPontoInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertXPontoInicialActionPerformed
+        
+    }//GEN-LAST:event_insertXPontoInicialActionPerformed
+
     private void insertXPontoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertXPontoFinalActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_insertXPontoFinalActionPerformed
 
     
@@ -441,6 +463,25 @@ public class Inicial extends javax.swing.JFrame {
                 new Inicial().setVisible(true);
             }
         });
+    }
+    
+    private List<Rectangle> TratarRect(){
+        List<Rectangle> obstacles = new ArrayList<>();
+        JTable table = tabelaObstaculos;
+        DefaultTableModel model = (DefaultTableModel) table.getModel();
+        for(int i=0;i<model.getRowCount();i++){
+            if((model.getValueAt(i, 0)!= null) && (model.getValueAt(i,1)!= null)&& (model.getValueAt(i,2)!= null)&& (model.getValueAt(i,3)!= null)){
+                int x = (int) model.getValueAt(i, 0);
+                int y = (int) model.getValueAt(i, 1);
+                int width = (int) model.getValueAt(i, 2);
+                int height = (int) model.getValueAt(i, 3);
+            
+                Rectangle rectangle = new Rectangle(x,y,width,height);
+                obstacles.add(rectangle);
+            }
+        }
+        return obstacles;
+    
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
