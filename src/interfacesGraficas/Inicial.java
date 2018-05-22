@@ -7,6 +7,8 @@ package interfacesGraficas;
 
 import Classes.Configuration;
 import Classes.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -60,13 +62,13 @@ public class Inicial extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         insertYPontoFinal = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        insertMutacoes = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         insertIteracoes = new javax.swing.JTextField();
         cruzamentos = new javax.swing.JLabel();
         insertCruzamentos = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         insertSolucoesAleatorias = new javax.swing.JTextField();
+        muta = new javax.swing.JSpinner();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -140,12 +142,6 @@ public class Inicial extends javax.swing.JFrame {
 
         jLabel11.setText("Mutações: ");
 
-        insertMutacoes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                insertMutacoesActionPerformed(evt);
-            }
-        });
-
         jLabel12.setText("Iterações:");
 
         cruzamentos.setText("Cruzamentos:");
@@ -163,6 +159,9 @@ public class Inicial extends javax.swing.JFrame {
                 insertSolucoesAleatoriasActionPerformed(evt);
             }
         });
+
+        muta.setModel(new javax.swing.SpinnerNumberModel(Float.valueOf(0.0f), Float.valueOf(-0.5f), Float.valueOf(0.5f), Float.valueOf(0.1f)));
+        muta.setToolTipText("");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -225,10 +224,13 @@ public class Inicial extends javax.swing.JFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(cruzamentos)
                                     .addComponent(jLabel11))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(insertCruzamentos, javax.swing.GroupLayout.DEFAULT_SIZE, 25, Short.MAX_VALUE)
-                                    .addComponent(insertMutacoes))))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(18, 18, 18)
+                                        .addComponent(insertCruzamentos, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(muta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addContainerGap(103, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
@@ -259,7 +261,7 @@ public class Inicial extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addGap(77, 77, 77))
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(202, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(larguraCenario)
                             .addComponent(insetLarguraCen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -270,13 +272,13 @@ public class Inicial extends javax.swing.JFrame {
                     .addComponent(insertXPontoFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
                     .addComponent(insertYPontoFinal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
                     .addComponent(insertIteracoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(insertMutacoes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addGap(31, 31, 31)
+                    .addComponent(jLabel11)
+                    .addComponent(muta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(37, 37, 37)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(cruzamentos)
                     .addComponent(insertCruzamentos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -286,7 +288,7 @@ public class Inicial extends javax.swing.JFrame {
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
                 .addContainerGap())
         );
@@ -301,7 +303,7 @@ public class Inicial extends javax.swing.JFrame {
     private void  verificarValores(){
         String alturaCen= insertAlturaCen.getText();
         String largCen=insetLarguraCen.getText();
-        String mutacoes=insertMutacoes.getText();
+        String mutacoes = (String) muta.getValue();
         
         String cruzamentos= insertCruzamentos.getText();
         String iteracoes= insertIteracoes.getText();
@@ -310,7 +312,7 @@ public class Inicial extends javax.swing.JFrame {
         try{
            int altura = Integer.parseInt(alturaCen);
            int largura = Integer.parseInt(largCen);
-           int muta = Integer.parseInt(mutacoes);
+           float muta = Float.parseFloat(mutacoes);
            int cruz = Integer.parseInt(cruzamentos);
            int ite = Integer.parseInt(iteracoes);
            int sol = Integer.parseInt(solucoesAleatorias);
@@ -375,10 +377,6 @@ public class Inicial extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_insertSolucoesAleatoriasActionPerformed
 
-    private void insertMutacoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertMutacoesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_insertMutacoesActionPerformed
-
     private void insertCruzamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertCruzamentosActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_insertCruzamentosActionPerformed
@@ -425,7 +423,6 @@ public class Inicial extends javax.swing.JFrame {
     private javax.swing.JTextField insertAlturaCen;
     private javax.swing.JTextField insertCruzamentos;
     private javax.swing.JTextField insertIteracoes;
-    private javax.swing.JTextField insertMutacoes;
     private javax.swing.JTextField insertSolucoesAleatorias;
     private javax.swing.JTextField insertXPontoFinal;
     private javax.swing.JTextField insertXPontoInicial;
@@ -445,6 +442,7 @@ public class Inicial extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JLabel larguraCenario;
+    private javax.swing.JSpinner muta;
     private javax.swing.JLabel pontoFinal;
     private javax.swing.JLabel pontoInicial;
     private javax.swing.JTable tabelaObstaculos;
