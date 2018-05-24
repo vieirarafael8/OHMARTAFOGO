@@ -43,11 +43,11 @@ public class IA_TP {
         Configuration c = new Configuration(500, 500, rr, p1, p2);
         PathViewer pp1 = new PathViewer(c);
         
-        Jenetic j = new Jenetic(100, 5, 5, 5, 5, 0.2, 100);
-        List<IChromosome> population = j.initialize();
-        IChromosome c1 = j.getFittest(population);
-        pp1.paintPath(c1.getGenes().stream().map(x -> (IPoint) x).collect(Collectors.toList()));
-        j.run();
+        //Jenetic j = new Jenetic(100, 5, 5, 5, 5, 0.2, 100);
+//        List<IChromosome> population = j.initialize();
+//        IChromosome c1 = j.getFittest(population);
+//        pp1.paintPath(c1.getGenes().stream().map(x -> (IPoint) x).collect(Collectors.toList()));
+//        j.run();
         
         
     }
