@@ -5,6 +5,7 @@
  */
 package Classes;
 
+import java.awt.Rectangle;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -32,8 +33,9 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     private double mutationFactor;
     private int iteration;
     private List<List<IChromosome>> historic;
+    private List<Rectangle> rectangles;
 
-    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations,double mutationFactor, int iteration) {
+    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations,double mutationFactor) {
         this.populationSize = populationSize;
         this.randomSize = randomSize;
         this.crossoverSize = crossoverSize;
@@ -42,7 +44,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
         this.mutationFactor = mutationFactor;
         this.iteration = 0;
         this.historic = new ArrayList<>(populationSize);
-       
+        this.rectangles=new ArrayList<>(rectangles);
     }
 
     public int getPopulationSize() {
@@ -108,8 +110,19 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     public void setHistoric(List<List<IChromosome>> historic) {
         this.historic = historic;
     }
-    
-    
+
+    public List getRectangles() {
+        return rectangles;
+    }
+
+    public void setRectangles(List rectangles) {
+        this.rectangles = rectangles;
+    }
+
+    @Override
+    public String toString() {
+        return "Jenetic{" + "rectangles=" + rectangles + '}';
+    }
     
     @Override
     public List<IChromosome> initialize() {
