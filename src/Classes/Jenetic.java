@@ -36,20 +36,20 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     private List<List<IChromosome>> historic;
     private List<Rectangle> rectangles;
 
-    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations) {
+
+
+    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor) {
         this.populationSize = populationSize;
         this.randomSize = randomSize;
         this.crossoverSize = crossoverSize;
         this.mutationSize = mutationSize;
         this.maxIterations = maxIterations;
+        this.mutationFactor = mutationFactor;
         this.iteration = 0;
         this.historic = new ArrayList<>(populationSize);
-        this.rectangles=new ArrayList<>(rectangles);
+        this.rectangles = new ArrayList<>(rectangles);
     }
-
-    public Jenetic(int popul, int sol, int cruz, int mutaaa, int ite, JSlider framesPerSecond) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+    
 
     public int getPopulationSize() {
         return populationSize;

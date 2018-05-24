@@ -22,6 +22,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JSlider;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.plaf.basic.BasicTextUI;
 import javax.swing.table.DefaultTableModel;
@@ -45,6 +46,15 @@ public class Inicial extends javax.swing.JFrame {
         checkBox(false);
         jCheckBox1.setSelected(true);
         Slider();
+        int escala = 10;
+        jSlider1.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent ce) {
+                JSlider s = (JSlider) ce.getSource();
+                float x =  (float)s.getValue() / escala;
+                jTextField1.setText("" + x);
+            }
+        });
     }
  
     /**
@@ -301,7 +311,7 @@ public class Inicial extends javax.swing.JFrame {
                                 .addGap(69, 69, 69)
                                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -527,15 +537,18 @@ public class Inicial extends javax.swing.JFrame {
     }
     
     private void checkBox (boolean aparece){
+ 
         
         JCheckBox cb = jCheckBox1;
         cb.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
-                
+                       
+                 
                 int i = ie.getStateChange();
 
                 if (!(i == 1)) {
+                    
                     jLabel1.setVisible(aparece);
                     cruzamentos.setVisible(aparece);
                     cruzamentos1.setVisible(aparece);
@@ -544,6 +557,7 @@ public class Inicial extends javax.swing.JFrame {
                     muta.setVisible(aparece);
                     melhorSolu.setVisible(aparece);
                     jLabel7.setVisible(aparece);
+               
                 } else {
                      jLabel1.setVisible(true);
                     cruzamentos.setVisible(true);
@@ -553,10 +567,14 @@ public class Inicial extends javax.swing.JFrame {
                     muta.setVisible(true);
                     melhorSolu.setVisible(true);
                     jLabel7.setVisible(true);
+                    
+                   
               }
+                
             }
+             
         });
-        
+      
     }
     
     
@@ -566,7 +584,7 @@ public class Inicial extends javax.swing.JFrame {
             float d= Float.valueOf(s);
             return d;
         }catch(NumberFormatException ex){
-            System.out.println("s");
+             JOptionPane.showMessageDialog(this, "Introduza a taxa de mutação!!");
         }
         return -1;
     }
@@ -579,10 +597,11 @@ public class Inicial extends javax.swing.JFrame {
             
             Random random= new Random();
             float ra = minimo+ random.nextFloat()*(maximo-minimo);
+           
             return ra;
             
         }else{
-            System.out.println("FUDEU");
+             JOptionPane.showMessageDialog(this, "Introduza as mutações!!");
         }
         return -1;
     }
@@ -603,26 +622,44 @@ public class Inicial extends javax.swing.JFrame {
         
         //necessárias
         
-        int ite = Integer.parseInt(insertIteracoes.getText());
-        int popul = Integer.parseInt(populacao.getText());
-        
-        if(insertIteracoes.getText()==null){
+        if(insertIteracoes.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Introduza as interações!!");
         }
         
-        if(populacao.getText()==null){
+        if(populacao.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Introduza a população!!");
         }
+        int ite = Integer.parseInt(insertIteracoes.getText());
+        int popul = Integer.parseInt(populacao.getText());
+        
         
         //se escolher editar solucoes
-        int sol = Integer.parseInt(insertSolucoesAleatorias.getText());
-        int cruz = Integer.parseInt(insertCruzamentos.getText());
-        int mutaaa= Integer.parseInt(muta.getText());
-        int mSolu = Integer.parseInt(melhorSolu.getText());
+         if(insertSolucoesAleatorias.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Introduza o numero de Soluções aleatorias!!");
+        }
         
-
-       
-        Jenetic jen1=new Jenetic(popul, sol, cruz, mutaaa, ite);
+        if(insertCruzamentos.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Introduza o numero de cruzamentos!!");
+        }
+         if(muta.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Introduza o numero de iterações!!");
+        }
+        
+        if(melhorSolu.getText().equals("")){
+            JOptionPane.showMessageDialog(this, "Introduza o numero de melhores Soluções!!");
+        }
+        
+        int sol = Integer.parseInt(insertSolucoesAleatorias.getText());
+        
+        int cruz = Integer.parseInt(insertCruzamentos.getText());
+        
+        int mutaaa= Integer.parseInt(muta.getText());
+        
+        float mSolu = Float.parseFloat(melhorSolu.getText());
+        
+        
+   
+        Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, mSolu);
         
         jen1.run();
         
@@ -635,31 +672,31 @@ public class Inicial extends javax.swing.JFrame {
 
     private void insertAlturaCenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAlturaCenActionPerformed
         
-        String alturaCen = insertAlturaCen.getText();
-        int altura = Integer.parseInt(alturaCen);
-        config.setHeight(altura);
+//        String alturaCen = insertAlturaCen.getText();
+//        int altura = Integer.parseInt(alturaCen);
+//        config.setHeight(altura);
          
     }//GEN-LAST:event_insertAlturaCenActionPerformed
 
     private void insertLarguraCenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertLarguraCenActionPerformed
-        String larguraCen = insertLarguraCen.getText();
-        int largura = Integer.parseInt(larguraCen);
-        config.setWidth(largura);
+//        String larguraCen = insertLarguraCen.getText();
+//        int largura = Integer.parseInt(larguraCen);
+//        config.setWidth(largura);
     }//GEN-LAST:event_insertLarguraCenActionPerformed
 
     private void insertCruzamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertCruzamentosActionPerformed
-        String cruzamentos= insertCruzamentos.getText();
-        
-        int cruza = Integer.parseInt(cruzamentos);
-        
-        jen.setCrossoverSize(cruza);
+//        String cruzamentos= insertCruzamentos.getText();
+//        
+//        int cruza = Integer.parseInt(cruzamentos);
+//        
+//        jen.setCrossoverSize(cruza);
     }//GEN-LAST:event_insertCruzamentosActionPerformed
 
     private void insertIteracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertIteracoesActionPerformed
-        String iteracoes= insertIteracoes.getText();
-
-        int itera = Integer.parseInt(iteracoes);
-        jen.setCrossoverSize(itera);
+//        String iteracoes= insertIteracoes.getText();
+//
+//        int itera = Integer.parseInt(iteracoes);
+//        jen.setCrossoverSize(itera);
     }//GEN-LAST:event_insertIteracoesActionPerformed
 
     private void insertXPontoInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertXPontoInicialActionPerformed
@@ -671,9 +708,9 @@ public class Inicial extends javax.swing.JFrame {
     }//GEN-LAST:event_insertXPontoFinalActionPerformed
 
     private void insertSolucoesAleatoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertSolucoesAleatoriasActionPerformed
-        String solucoesAleatorias= insertSolucoesAleatorias.getText();
-        int solAl = Integer.parseInt(solucoesAleatorias);
-        jen.setRandomSize(solAl);
+//        String solucoesAleatorias= insertSolucoesAleatorias.getText();
+//        int solAl = Integer.parseInt(solucoesAleatorias);
+//        jen.setRandomSize(solAl);
     }//GEN-LAST:event_insertSolucoesAleatoriasActionPerformed
 
     private void populacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populacaoActionPerformed
