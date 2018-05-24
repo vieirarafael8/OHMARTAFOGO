@@ -228,7 +228,19 @@ public class Inicial extends javax.swing.JFrame {
 
         jLabel6.setText("Pretende editar as soluções?");
 
+        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jCheckBox1ActionPerformed(evt);
+            }
+        });
+
         jLabel7.setText("Nº Melhores soluções:");
+
+        melhorSolu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                melhorSoluActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -559,7 +571,7 @@ public class Inicial extends javax.swing.JFrame {
                     jLabel7.setVisible(aparece);
                
                 } else {
-                     jLabel1.setVisible(true);
+                    jLabel1.setVisible(true);
                     cruzamentos.setVisible(true);
                     cruzamentos1.setVisible(true);
                     insertSolucoesAleatorias.setVisible(true);
@@ -567,6 +579,8 @@ public class Inicial extends javax.swing.JFrame {
                     muta.setVisible(true);
                     melhorSolu.setVisible(true);
                     jLabel7.setVisible(true);
+                    
+                  
                     
                    
               }
@@ -621,6 +635,12 @@ public class Inicial extends javax.swing.JFrame {
         Configuration configg = new Configuration(getWidth(),getHeight(),TratarRect(), criarPontoFinal(),criarPontoFinal());      
         
         //necessárias
+        JCheckBox cb = jCheckBox1;
+        
+        if(cb.isSelected()){
+            System.out.println("OLAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        }else{
+            
         
         if(insertIteracoes.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Introduza as interações!!");
@@ -657,12 +677,22 @@ public class Inicial extends javax.swing.JFrame {
         
         float mSolu = Float.parseFloat(melhorSolu.getText());
         
-        
+        int soma= (int) (sol+cruz+mutaaa+mSolu);
+                    
+        if(soma<=popul){
+            int div= popul/4;
+            sol=div;
+            cruz=div;
+            mutaaa=div;
+            mSolu=div;
+        }else{
+            
+        }
    
         Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, mSolu,TratarRect(), configg);
         
         jen1.run();
-        
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void insertYPontoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertYPontoFinalActionPerformed
@@ -716,6 +746,14 @@ public class Inicial extends javax.swing.JFrame {
     private void populacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populacaoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_populacaoActionPerformed
+
+    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jCheckBox1ActionPerformed
+
+    private void melhorSoluActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_melhorSoluActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_melhorSoluActionPerformed
 
     
     public static void main(String args[]) {

@@ -525,6 +525,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel7">
       <Properties>
@@ -532,6 +535,9 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JTextField" name="melhorSolu">
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="melhorSoluActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JSlider" name="jSlider1">
     </Component>

@@ -33,8 +33,6 @@ public class Gene implements jenetic.interfaces.IGene{
         
     }
 
- 
-    
     @Override
     protected Object clone(){
         return new Gene(this.p);
