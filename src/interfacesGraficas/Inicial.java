@@ -523,10 +523,10 @@ public class Inicial extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         for(int i=0;i<model.getRowCount();i++){
             if((model.getValueAt(i, 0)!= null) && (model.getValueAt(i,1)!= null)&& (model.getValueAt(i,2)!= null)&& (model.getValueAt(i,3)!= null)){
-                int x = (int) model.getValueAt(i, 0);
-                int y = (int) model.getValueAt(i, 1);
-                int width = (int) model.getValueAt(i, 2);
-                int height = (int) model.getValueAt(i, 3);
+                int x = Integer.parseInt((String) table.getModel().getValueAt(i, 0));
+                int y = Integer.parseInt((String) table.getModel().getValueAt(i, 1));
+                int width = Integer.parseInt((String) table.getModel().getValueAt(i, 2));
+                int height = Integer.parseInt((String) table.getModel().getValueAt(i, 3));
             
                 Rectangle rectangle = new Rectangle(x,y,width,height);
                 obstacles.add(rectangle);
@@ -659,7 +659,7 @@ public class Inicial extends javax.swing.JFrame {
         
         
    
-        Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, mSolu);
+        Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, mSolu,TratarRect(), configg);
         
         jen1.run();
         

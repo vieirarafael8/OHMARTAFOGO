@@ -33,9 +33,7 @@ public class Gene implements jenetic.interfaces.IGene{
         
     }
 
-    Gene() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
+ 
     
     @Override
     protected Object clone(){

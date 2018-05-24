@@ -35,10 +35,11 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     private int iteration;
     private List<List<IChromosome>> historic;
     private List<Rectangle> rectangles;
+    private Configuration c;
 
 
 
-    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor) {
+    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor, List<Rectangle> rectangles, Configuration c) {
         this.populationSize = populationSize;
         this.randomSize = randomSize;
         this.crossoverSize = crossoverSize;
@@ -48,8 +49,10 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
         this.iteration = 0;
         this.historic = new ArrayList<>(populationSize);
         this.rectangles = new ArrayList<>(rectangles);
+        this.c=c;
     }
-    
+
+
 
     public int getPopulationSize() {
         return populationSize;
@@ -123,6 +126,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
         this.rectangles = rectangles;
     }
 
+    
     @Override
     public String toString() {
         return "Jenetic{" + "rectangles=" + rectangles + '}';
@@ -130,7 +134,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     
     @Override
     public List<IChromosome> initialize() {
-        return Stream.generate(() -> new Cromossoma(1, 1)).limit(populationSize).collect(Collectors.toList());
+        return Stream.generate(() -> new Cromossoma(1, 1, c)).limit(populationSize).collect(Collectors.toList());
         
     }
 
@@ -162,7 +166,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
 
     @Override
     public List<IChromosome> random() {
-        return Stream.generate(() -> ((IChromosome) new Cromossoma(1,1)))
+        return Stream.generate(() -> ((IChromosome) new Cromossoma(1,1, c)))
                         .limit(randomSize)
                         .collect(Collectors.toList());
         
