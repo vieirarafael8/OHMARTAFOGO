@@ -621,6 +621,13 @@ public class Inicial extends javax.swing.JFrame {
         Configuration configg = new Configuration(getWidth(),getHeight(),TratarRect(), criarPontoFinal(),criarPontoFinal());      
         
         //necessárias
+
+        JCheckBox cb = jCheckBox1;
+        
+        if(cb.isSelected()){
+            System.out.println("OLAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        }else{
+            
         
         if(insertIteracoes.getText().equals("")){
             JOptionPane.showMessageDialog(this, "Introduza as interações!!");
@@ -657,12 +664,22 @@ public class Inicial extends javax.swing.JFrame {
         
         float mSolu = Float.parseFloat(melhorSolu.getText());
         
-        
+        int soma= (int) (sol+cruz+mutaaa+mSolu);
+                    
+        if(soma<=popul){
+            int div= popul/4;
+            sol=div;
+            cruz=div;
+            mutaaa=div;
+            mSolu=div;
+        }else{
+            
+        }
    
         Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, mSolu,TratarRect(), configg);
         
         jen1.run();
-        
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void insertYPontoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertYPontoFinalActionPerformed

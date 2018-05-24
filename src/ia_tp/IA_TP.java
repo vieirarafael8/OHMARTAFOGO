@@ -39,7 +39,7 @@ public class IA_TP {
         Point p2 = new Point(500, 500);
         rr.add(r1);
         rr.add(r2);
-        Gene g = new Gene(p1);
+      //  Gene g = new Gene(p1);
         Configuration c = new Configuration(500, 500, rr, p1, p2);
         PathViewer pp1 = new PathViewer(c);
         

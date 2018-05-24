@@ -17,8 +17,9 @@ public class Gene implements jenetic.interfaces.IGene{
     private Configuration c;
 
     
-    public Gene(Point p) {
+    public Gene(Point p, Configuration c) {
         this.p = p;
+        this.c=c;
     }
 
     public Gene(Configuration c) {
@@ -37,7 +38,7 @@ public class Gene implements jenetic.interfaces.IGene{
     
     @Override
     protected Object clone(){
-        return new Gene(this.p);
+        return new Gene(this.p,c);
     }
 
     @Override

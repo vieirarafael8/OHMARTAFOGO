@@ -27,47 +27,44 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
         this.c =c;
         this.maxSize = maxSize;
         this.minSize = minSize;
+        
+        do {
         genes = new ArrayList<>();
         IPoint init = c.getStart();
         IPoint end = c.getEnd();
-        IGene geneI = new Gene((Point) init);
-        IGene geneF = new Gene((Point) end);
-        IPoint geneP  =null;
-        genes.add(new Gene((Point) geneP));
-        int size = new Random().nextInt(maxSize +1 - minSize) + minSize;
-       
-      //  for(int i=0; i<size; i++){
-       
-       int x=0;
-       int minX = init.getX();
-       int maxX = end.getX();
-       int minY = init.getY();
-       int maxY = end.getY();
-       do {
-           int j = new Random().nextInt(maxX+1-minX)+minX;
-           int i = new Random().nextInt(maxY+1-minY)+minY;
-           IPoint PointNovo = new Point(j, i);
-           Gene NovoGene= new Gene((Point) PointNovo);
-           genes.add(NovoGene);
-           minX=PointNovo.getX();
-           minY = PointNovo.getY();
-           x++;
-       }while(x<size-1);
+        Gene geneI = new Gene((Point) init,c);
+        IGene geneF = new Gene((Point) end,c);
+        Gene geneale =new Gene(c);
+        genes.add(geneI);
         genes.add(geneF);
-        
+        genes.add((IGene) geneale);
     
+       }while(!isValid());
+        
     }
 
-    public Cromossoma(Cromossoma other, IGene gene, Configuration c) {
-        this.genes = other.getGenes();
-        this.c=c;
+    public Cromossoma(Cromossoma other, List<IGene> genes, Configuration c) {
+        this.maxSize = other.maxSize;
+        this.minSize = other.minSize;
+        this.genes = genes;
+        this.c = c;
+        this.genes = new ArrayList<>();
     }
+
+   
 
     private Cromossoma(Cromossoma aThis, Configuration c) {
         this.maxSize=aThis.maxSize;
         this.minSize=aThis.minSize;
        this.genes = aThis.getGenes();
        this.c=c;
+       
+    }
+
+    private Cromossoma(Cromossoma aThis, Gene gene) {
+       this.maxSize = aThis.maxSize;
+       this.minSize = aThis.minSize;
+       this.genes=(List<IGene>) gene;
     }
 
 
@@ -88,7 +85,7 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
             int y = (int) (gene.getP().getY() +dif);
             Point p = new Point(x, y);
             gene.setP(p);
-            novo = new Cromossoma(this, gene, c);
+            novo = new Cromossoma(this, gene);
             
         }while(!isValid(novo) && limit++ <30);
         
@@ -106,7 +103,7 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
         do
         {
             gene.setP(((Gene)ic.getGenes().get(0)).getP());
-            novo = new Cromossoma(this, gene, c);
+            novo = new Cromossoma(this, gene);
         }while(!isValid(novo)&& limit++ <30);
         
         return novo;
