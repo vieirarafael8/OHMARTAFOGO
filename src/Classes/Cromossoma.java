@@ -209,7 +209,7 @@ public final class Cromossoma implements jenetic.interfaces.IChromosome, Compara
             
             int startX=genePoint.getX();
             int startY=genePoint.getY();
-            int endX=end.getY();
+            int endX=end.getX();
             int endY=end.getY();
             double debaixoRaiz=(Math.pow((endX-startX),2) + Math.pow((endY-startY),2));
             fitness = fitness + Math.sqrt(debaixoRaiz);
