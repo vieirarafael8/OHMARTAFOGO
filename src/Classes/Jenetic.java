@@ -27,7 +27,6 @@ import jenetic.interfaces.IPoint;
  */
 public class Jenetic implements jenetic.interfaces.IJenetic{
 
-    
     private int populationSize;
     private int randomSize;
     private int crossoverSize;
@@ -40,8 +39,6 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     private Configuration c;
     private int melhorSolu;
     private int tamHeredity;
-
-
 
     public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor, List<Rectangle> rectangles, Configuration c, int melhorSolu, int tamHeredity) {
         this.populationSize = populationSize;

@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -48,9 +48,7 @@ public class Gene implements jenetic.interfaces.IGene, jenetic.interfaces.IPoint
     public String toString() {
         return "Gene{" + "p=" + p + ", c=" + c + '}';
     }
-
-    
-  
+      
     @Override
     public boolean isValid() {
         return true;

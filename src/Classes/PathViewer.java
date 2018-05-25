@@ -54,9 +54,9 @@ public class PathViewer
     private class UI extends JPanel
     {
         private final Color COR_CAMINHO = Color.GRAY;
-        private final Color COR_LETRAS = Color.BLACK;
-        private final Color COR_PROCESSAMENTO = Color.green;
-        private final Color COR_SILO = Color.BLACK;
+        //private final Color COR_LETRAS = Color.BLACK;
+        //private final Color COR_PROCESSAMENTO = Color.BLUE;
+        //private final Color COR_SILO = Color.BLACK;
         private int largura, altura;
         private List<IPoint> path;
         private List<Rectangle> obstacles;
