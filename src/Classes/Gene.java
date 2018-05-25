@@ -30,8 +30,8 @@ public class Gene implements jenetic.interfaces.IGene, jenetic.interfaces.IPoint
         int maxX = c.getEnd().getX();
         int minY = c.getStart().getY();
         int maxY = c.getEnd().getY();
-        int x = minX + (maxX - minX) * new Random().nextInt();
-        int y = minY + (maxY - minY) * new Random().nextInt();
+        int x = new Random().nextInt(maxX+1-minX)+minX;
+        int y = new Random().nextInt(maxY+1-minY)+minY;
       
         this.p = new Point(x, y);
         }while(!isValid());

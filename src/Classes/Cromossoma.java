@@ -19,7 +19,7 @@ import jenetic.interfaces.IPoint;
  *
  * @author vieir
  */
-public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cromossoma>{
+public final class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cromossoma>{
 
     private int maxSize;
     private int minSize;

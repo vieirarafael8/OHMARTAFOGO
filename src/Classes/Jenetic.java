@@ -228,14 +228,14 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
 
             List<IChromosome> offspring = mutate(best);
             offspring.addAll(cross(best));
-            //offspring.addAll(heredity(best));
+            offspring.addAll(heredity(best));
             offspring.addAll(random());
 
             best.addAll(offspring);
 
-            System.out.println(best.size());
+            //System.out.println(best.size());
 
-            population = offspring;
+            population = selection(offspring);
 
             historic.add(population);
             
