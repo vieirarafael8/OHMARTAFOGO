@@ -142,8 +142,8 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
     @Override
     public double getFitness() {
         
-//        Gene g = (Gene) genes.get(0);
-//        Point p = g.getP();
+        Gene g = (Gene) genes.get(0);
+        Point p = g.getP();
         int initx = c.getStart().getX();
         int inity = c.getStart().getY();
         int finx = c.getEnd().getX();

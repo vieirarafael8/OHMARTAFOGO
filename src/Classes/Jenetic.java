@@ -135,7 +135,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     @Override
     public List<IChromosome> initialize() {
         return Stream.generate(() -> new Cromossoma(1, 1, c)).limit(populationSize).collect(Collectors.toList());
-        
+             
     }
 
     private IChromosome getRandomChromosome(List<IChromosome> parents)
