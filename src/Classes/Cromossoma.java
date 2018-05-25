@@ -47,7 +47,8 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
     public List<IGene> XPath(){
         int pos=1;
         if(existeObstaculos(c.getStart(), c.getEnd())){
-            int x = c.getStart().getX(), y= c.getStart().getY();
+            int x = c.getStart().getX();
+            int y= c.getStart().getY();
             A:
             do{
                 Gene g = new Gene(c);
@@ -247,9 +248,8 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
 
     @Override
     public String toString() {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        return "Cromossoma{" + "maxSize=" + maxSize + ", minSize=" + minSize + ", genes=" + genes + ", c=" + c + '}';
     }
-
 
     @Override
     public int compareTo(Cromossoma t) {

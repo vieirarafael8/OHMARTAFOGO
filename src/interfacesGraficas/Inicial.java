@@ -683,7 +683,9 @@ public class Inicial extends javax.swing.JFrame {
             if (melhorSolu.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Introduza o numero de melhores Soluções!!");
             }
+Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu, here);
 
+        jen1.run();
         } else {
             int soma = (int) (sol + cruz + mutaaa + mSolu);
 
@@ -695,12 +697,12 @@ public class Inicial extends javax.swing.JFrame {
                 mSolu = div;
                 here=div;
             }
-
-        }
-
-        Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu, here);
+            Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu, here);
 
         jen1.run();
+        }
+
+         
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

@@ -46,9 +46,10 @@ public class Gene implements jenetic.interfaces.IGene, jenetic.interfaces.IPoint
 
     @Override
     public String toString() {
-        return super.toString(); //To change body of generated methods, choose Tools | Templates.
+        return "Gene{" + "p=" + p + ", c=" + c + '}';
     }
 
+    
   
     @Override
     public boolean isValid() {
