@@ -471,10 +471,11 @@ public class Inicial extends javax.swing.JFrame {
             int xinit = Integer.parseInt(xPontoInicial);
             int yinit = Integer.parseInt(yPontoIncial);
             pi = new Point(xinit, yinit);
+//            config.setStart(pi);
         } catch (Exception ex) {
             System.out.println("ERRO");
             ex.printStackTrace();
-            //config.setStart(pi);
+            
         }
 
         return pi;
@@ -495,10 +496,11 @@ public class Inicial extends javax.swing.JFrame {
             int xfinal = Integer.parseInt(xPontoFinal);
             int yfinal = Integer.parseInt(yPontoFinal);
             pf = new Point(xfinal, yfinal);
+//             config.setEnd(pf);
         } catch (Exception ex) {
             System.out.println("ERRo");
             ex.printStackTrace();
-            //config.setEnd(pf);
+           
         }
         return pf;
 
@@ -662,9 +664,7 @@ public class Inicial extends javax.swing.JFrame {
             if (melhorSolu.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Introduza o numero de melhores Soluções!!");
             }
-Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu);
 
-        jen1.run();
         } else {
             int soma = (int) (sol + cruz + mutaaa + mSolu);
 
@@ -675,12 +675,12 @@ Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(),
                 mutaaa = div;
                 mSolu = div;
             }
-            Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu);
 
-        jen1.run();
         }
 
-        
+        Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu);
+
+        jen1.run();
 
     }//GEN-LAST:event_jButton1ActionPerformed
 

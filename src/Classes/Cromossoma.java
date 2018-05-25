@@ -47,7 +47,7 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
         int pos=1;
         if(existeObstaculos(c.getStart(), c.getEnd())){
             int x = c.getStart().getX(), y= c.getStart().getY();
-            A:
+            
             do{
                 Gene g = new Gene(c);
                 genes.add(g);
@@ -56,7 +56,7 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
                     Gene gg = (Gene) genes.get(j);
                     if(existeObstaculos(new Point(x, y), new Point(gg.getX(), gg.getY()))){
                         genes.remove(genes.size()-1);
-                        break;
+                        
                     }
                     pos++;
                     
@@ -65,7 +65,7 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
                     
                     if(j==genes.size()-1 && !existeObstaculos(new Point(x, y), c.getEnd())){
                         genes.add(new Gene((Point) c.getEnd(), c));
-                        break A;
+                        
                     }
                 }
                 
