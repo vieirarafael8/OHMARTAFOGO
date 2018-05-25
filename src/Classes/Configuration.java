@@ -13,7 +13,7 @@ import jenetic.interfaces.IPoint;
  *
  * @author vieir
  */
-public class Configuration implements jenetic.interfaces.IUIConfiguration{
+public class Configuration implements jenetic.interfaces.IUIConfiguration {
 
     private int width;
     private int height;
@@ -28,59 +28,53 @@ public class Configuration implements jenetic.interfaces.IUIConfiguration{
         this.pInit = pInit;
         this.pFinal = pFinal;
     }
-    
-    @Override
+
     public int getWidth() {
-        return this.width;
-       
+        return width;
     }
 
-    @Override
-    public void setWidth(int i) {
-        this.width =i;
+    public void setWidth(int width) {
+        this.width = width;
     }
 
-    @Override
     public int getHeight() {
-        return this.height;
-        
+        return height;
     }
 
-    @Override
-    public void setHeight(int i) {
-        this.height=i;
+    public void setHeight(int height) {
+        this.height = height;
     }
 
     @Override
     public List<Rectangle> getObstacles() {
-        return this.obs;
+        return obs;
     }
 
     @Override
     public void setObstacles(List<Rectangle> list) {
-      this.obs = list;
+        this.obs = list;
     }
 
     @Override
     public IPoint getStart() {
-        return this.pInit;
-       
+        return pInit;
     }
 
     @Override
     public void setStart(IPoint ipoint) {
-       this.pInit = ipoint;
+        this.pInit = ipoint;
     }
 
     @Override
     public IPoint getEnd() {
-        return this.pFinal;
-       
+        return pFinal;
     }
 
     @Override
     public void setEnd(IPoint ipoint) {
-        this.pFinal =ipoint;
+        this.pFinal = ipoint;
     }
+
+
     
 }

@@ -6,14 +6,15 @@
 package Classes;
 
 import java.util.Random;
+import jenetic.interfaces.IPoint;
 
 /**
  *
  * @author vieir
  */
-public class Gene implements jenetic.interfaces.IGene{
+public class Gene implements jenetic.interfaces.IGene, jenetic.interfaces.IPoint{
 
-    private Point p;
+    private IPoint p;
     private Configuration c;
 
     
@@ -23,28 +24,32 @@ public class Gene implements jenetic.interfaces.IGene{
     }
 
     public Gene(Configuration c) {
+        do{
         this.c = c;
-        int minX = 0;
-        int maxX = c.getWidth();
-        int minY = 0;
-        int maxY = c.getHeight();
+        int minX = c.getStart().getX();
+        int maxX = c.getEnd().getX();
+        int minY = c.getStart().getY();
+        int maxY = c.getEnd().getY();
         int x = minX + (maxX - minX) * new Random().nextInt();
         int y = minY + (maxY - minY) * new Random().nextInt();
+      
         this.p = new Point(x, y);
+        }while(!isValid());
         
-    }
-
+    
+        }
+    
     @Override
     protected Object clone(){
-        return new Gene(this.p,c);
+        return new Gene((Point) this.p,c);
     }
 
     @Override
     public String toString() {
-        return "Gene{" + "p=" + p + ", c=" + c + '}';
+        return super.toString(); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    
+
+  
     @Override
     public boolean isValid() {
         return true;
@@ -52,7 +57,7 @@ public class Gene implements jenetic.interfaces.IGene{
     }
 
     public Point getP() {
-        return p;
+        return (Point) p;
     }
 
     public void setP(Point p) {
@@ -65,6 +70,16 @@ public class Gene implements jenetic.interfaces.IGene{
 
     public void setC(Configuration c) {
         this.c = c;
+    }
+
+    @Override
+    public int getX() {
+        return p.getX();
+    }
+
+    @Override
+    public int getY() {
+        return p.getY();
     }
     
     

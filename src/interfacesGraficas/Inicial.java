@@ -8,7 +8,6 @@ package interfacesGraficas;
 import Classes.Configuration;
 import Classes.Jenetic;
 import Classes.Point;
-import java.awt.Checkbox;
 import java.awt.Rectangle;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.swing.JCheckBox;
-import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JSlider;
@@ -24,9 +22,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
-import javax.swing.plaf.basic.BasicTextUI;
 import javax.swing.table.DefaultTableModel;
-import jenetic.interfaces.UIConfiguration;
 
 /**
  *
@@ -37,7 +33,7 @@ public class Inicial extends javax.swing.JFrame {
     private Point point;
     private Configuration config;
     private Jenetic jen;
-   
+
     /**
      * Creates new form Inicial
      */
@@ -51,12 +47,12 @@ public class Inicial extends javax.swing.JFrame {
             @Override
             public void stateChanged(ChangeEvent ce) {
                 JSlider s = (JSlider) ce.getSource();
-                float x =  (float)s.getValue() / escala;
-                jTextField1.setText("" + x);
+                float x = (float) s.getValue() / escala;
+                taxaMuta.setText("" + x);
             }
         });
     }
- 
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -106,7 +102,7 @@ public class Inicial extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         melhorSolu = new javax.swing.JTextField();
         jSlider1 = new javax.swing.JSlider();
-        jTextField1 = new javax.swing.JTextField();
+        taxaMuta = new javax.swing.JTextField();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -323,7 +319,7 @@ public class Inicial extends javax.swing.JFrame {
                                 .addGap(69, 69, 69)
                                 .addComponent(jSlider1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(taxaMuta, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -446,7 +442,7 @@ public class Inicial extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButton1))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(taxaMuta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -457,56 +453,57 @@ public class Inicial extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void insertYPontoInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertYPontoInicialActionPerformed
-        
+
     }//GEN-LAST:event_insertYPontoInicialActionPerformed
 
-    private Point criarPontoInicial (){
-        String xPontoInicial= insertXPontoInicial.getText();
-        String yPontoIncial= insertYPontoInicial.getText();
-        if(insertXPontoInicial.getText()==null){
-                System.out.println("insira o x do ponto inicial");
-            }
-            if(insertYPontoInicial.getText()==null){
-                System.out.println("insira o y do ponto inicial");
-            }
-        Point pi= null;
-        
-        try{
-            
-        }catch(Exception ex){
-            
-            int xinit = Integer.parseInt(xPontoInicial);
-           int yinit = Integer.parseInt(yPontoIncial);
-          pi=new Point(xinit, yinit);
-          config.setStart(pi);
+    private Point criarPontoInicial() {
+        String xPontoInicial = insertXPontoInicial.getText();
+        String yPontoIncial = insertYPontoInicial.getText();
+        if (insertXPontoInicial.getText() == null) {
+            System.out.println("insira o x do ponto inicial");
         }
-        
-        return pi;      
+        if (insertYPontoInicial.getText() == null) {
+            System.out.println("insira o y do ponto inicial");
+        }
+        Point pi = null;
+
+        try {
+            int xinit = Integer.parseInt(xPontoInicial);
+            int yinit = Integer.parseInt(yPontoIncial);
+            pi = new Point(xinit, yinit);
+        } catch (Exception ex) {
+            System.out.println("ERRO");
+            ex.printStackTrace();
+            //config.setStart(pi);
+        }
+
+        return pi;
     }
 
-    private Point criarPontoFinal (){
-        String xPontoFinal= insertXPontoFinal.getText();
-        String yPontoFinal= insertYPontoFinal.getText();
-       if(insertXPontoInicial.getText()==null){
-                System.out.println("insira o x do ponto final");
-            }
-            if(insertYPontoInicial.getText()==null){
-                System.out.println("insira o y do ponto final");
-            }
-        Point pf= null;
-        
-        try{
-            
-        }catch(Exception ex){
-           int xfinal = Integer.parseInt(xPontoFinal);
-           int yfinal = Integer.parseInt(yPontoFinal);
-          pf=new Point(xfinal, yfinal);
-          config.setEnd(pf);
+    private Point criarPontoFinal() {
+        String xPontoFinal = insertXPontoFinal.getText();
+        String yPontoFinal = insertYPontoFinal.getText();
+        if (insertXPontoInicial.getText() == null) {
+            System.out.println("insira o x do ponto final");
+        }
+        if (insertYPontoInicial.getText() == null) {
+            System.out.println("insira o y do ponto final");
+        }
+        Point pf = null;
+
+        try {
+            int xfinal = Integer.parseInt(xPontoFinal);
+            int yfinal = Integer.parseInt(yPontoFinal);
+            pf = new Point(xfinal, yfinal);
+        } catch (Exception ex) {
+            System.out.println("ERRo");
+            ex.printStackTrace();
+            //config.setEnd(pf);
         }
         return pf;
-        
+
     }
-    
+
     public Inicial(JLabel pontoFinal, JLabel pontoInicial) {
         this.pontoFinal = pontoFinal;
         this.pontoInicial = pontoInicial;
@@ -527,40 +524,37 @@ public class Inicial extends javax.swing.JFrame {
     public void setPontoInicial(JLabel pontoInicial) {
         this.pontoInicial = pontoInicial;
     }
-    
-        
-    private List<Rectangle> TratarRect(){
+
+    private List<Rectangle> TratarRect() {
         List<Rectangle> obstacles = new ArrayList<>();
         JTable table = tabelaObstaculos;
         DefaultTableModel model = (DefaultTableModel) table.getModel();
-        for(int i=0;i<model.getRowCount();i++){
-            if((model.getValueAt(i, 0)!= null) && (model.getValueAt(i,1)!= null)&& (model.getValueAt(i,2)!= null)&& (model.getValueAt(i,3)!= null)){
+        for (int i = 0; i < model.getRowCount(); i++) {
+            if ((model.getValueAt(i, 0) != null) && (model.getValueAt(i, 1) != null) && (model.getValueAt(i, 2) != null) && (model.getValueAt(i, 3) != null)) {
                 int x = Integer.parseInt((String) table.getModel().getValueAt(i, 0));
                 int y = Integer.parseInt((String) table.getModel().getValueAt(i, 1));
                 int width = Integer.parseInt((String) table.getModel().getValueAt(i, 2));
                 int height = Integer.parseInt((String) table.getModel().getValueAt(i, 3));
-            
-                Rectangle rectangle = new Rectangle(x,y,width,height);
+
+                Rectangle rectangle = new Rectangle(x, y, width, height);
                 obstacles.add(rectangle);
             }
         }
         return obstacles;
-    
+
     }
-    
-    private void checkBox (boolean aparece){
- 
-        
+
+    private void checkBox(boolean aparece) {
+
         JCheckBox cb = jCheckBox1;
         cb.addItemListener(new ItemListener() {
             @Override
             public void itemStateChanged(ItemEvent ie) {
-                       
-                 
+
                 int i = ie.getStateChange();
 
                 if (!(i == 1)) {
-                    
+
                     jLabel1.setVisible(aparece);
                     cruzamentos.setVisible(aparece);
                     cruzamentos1.setVisible(aparece);
@@ -569,7 +563,7 @@ public class Inicial extends javax.swing.JFrame {
                     muta.setVisible(aparece);
                     melhorSolu.setVisible(aparece);
                     jLabel7.setVisible(aparece);
-               
+
                 } else {
                     jLabel1.setVisible(true);
                     cruzamentos.setVisible(true);
@@ -579,49 +573,45 @@ public class Inicial extends javax.swing.JFrame {
                     muta.setVisible(true);
                     melhorSolu.setVisible(true);
                     jLabel7.setVisible(true);
-                    
-                  
-                    
-                   
-              }
-                
+
+                }
+
             }
-             
+
         });
-      
+
     }
-    
-    
-    private float mutacoes(JTextField taxamuta){
-        String s=taxamuta.getText();
-        try{
-            float d= Float.valueOf(s);
+
+    private float mutacoes(JTextField taxamuta) {
+        String s = taxamuta.getText();
+        try {
+            float d = Float.valueOf(s);
             return d;
-        }catch(NumberFormatException ex){
-             JOptionPane.showMessageDialog(this, "Introduza a taxa de mutação!!");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Introduza a taxa de mutação!!");
         }
         return -1;
     }
-    
-    private float mutacoesDiv(){
-        if(jTextField1.getText().isEmpty()){
-            float x= mutacoes(jTextField1);
-            float minimo= -x;
-            float maximo= x;
-            
-            Random random= new Random();
-            float ra = minimo+ random.nextFloat()*(maximo-minimo);
-           
+
+    private float mutacoesDiv() {
+        if (taxaMuta.getText().isEmpty()) {
+            float x = mutacoes(taxaMuta);
+            float minimo = -x;
+            float maximo = x;
+
+            Random random = new Random();
+            float ra = minimo + random.nextFloat() * (maximo - minimo);
+
             return ra;
-            
-        }else{
-             JOptionPane.showMessageDialog(this, "Introduza as mutações!!");
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Introduza as mutações!!");
         }
         return -1;
     }
-    
-    private void Slider(){
-        JSlider j= jSlider1;
+
+    private void Slider() {
+        JSlider j = jSlider1;
         j.setMaximum(5);
         j.setMinimum(0);
         j.setValue(0);
@@ -630,106 +620,94 @@ public class Inicial extends javax.swing.JFrame {
         j.setPaintLabels(true);
         j.setPaintTicks(true);
     }
-    
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Configuration configg = new Configuration(getWidth(),getHeight(),TratarRect(), criarPontoFinal(),criarPontoFinal());      
-        
+        Configuration configg = new Configuration(Integer.parseInt(insertLarguraCen.getText()), Integer.parseInt(insertAlturaCen.getText()), TratarRect(), criarPontoInicial(), criarPontoFinal());
+
         JCheckBox cb = jCheckBox1;
-        
-        if(cb.isSelected()){
-            System.out.println("OLAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        }else{
-            
-        
-        if(insertIteracoes.getText().equals("")){
+
+        if (insertIteracoes.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Introduza as interações!!");
         }
-        
-        if(populacao.getText().equals("")){
+
+        if (populacao.getText().equals("")) {
             JOptionPane.showMessageDialog(this, "Introduza a população!!");
         }
         int ite = Integer.parseInt(insertIteracoes.getText());
         int popul = Integer.parseInt(populacao.getText());
-        
-        
-        //se escolher editar solucoes...
-         if(insertSolucoesAleatorias.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Introduza o numero de Soluções aleatorias!!");
-        }
-        
-        if(insertCruzamentos.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Introduza o numero de cruzamentos!!");
-        }
-         if(muta.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Introduza o numero de iterações!!");
-        }
-        
-        if(melhorSolu.getText().equals("")){
-            JOptionPane.showMessageDialog(this, "Introduza o numero de melhores Soluções!!");
-        }
-        
+
         int sol = Integer.parseInt(insertSolucoesAleatorias.getText());
-        
+
         int cruz = Integer.parseInt(insertCruzamentos.getText());
-        
-        int mutaaa= Integer.parseInt(muta.getText());
-        
-        float mSolu = Float.parseFloat(melhorSolu.getText());
-        
-        int soma= (int) (sol+cruz+mutaaa+mSolu);
-                    
-        if(soma<=popul){
-            int div= popul/4;
-            sol=div;
-            cruz=div;
-            mutaaa=div;
-            mSolu=div;
-        }else{
-            
-        }
-   
-        Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, mSolu,TratarRect(), configg);
-        
+
+        int mutaaa = Integer.parseInt(muta.getText());
+
+        int mSolu = Integer.parseInt(melhorSolu.getText());
+        float numMuta = Float.parseFloat(taxaMuta.getText());
+
+        if (cb.isSelected()) {
+            System.out.println("selecionado!!!!!!");
+            //se escolher editar solucoes...
+            if (insertSolucoesAleatorias.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Introduza o numero de Soluções aleatorias!!");
+            }
+
+            if (insertCruzamentos.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Introduza o numero de cruzamentos!!");
+            }
+            if (muta.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Introduza o numero de iterações!!");
+            }
+
+            if (melhorSolu.getText().equals("")) {
+                JOptionPane.showMessageDialog(this, "Introduza o numero de melhores Soluções!!");
+            }
+Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu);
+
+        jen1.run();
+        } else {
+            int soma = (int) (sol + cruz + mutaaa + mSolu);
+
+            if (soma <= popul) {
+                int div = popul / 4;
+                sol = div;
+                cruz = div;
+                mutaaa = div;
+                mSolu = div;
+            }
+            Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu);
+
         jen1.run();
         }
+
+        
+
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void insertYPontoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertYPontoFinalActionPerformed
-        
-        
+
+
     }//GEN-LAST:event_insertYPontoFinalActionPerformed
 
     private void insertAlturaCenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertAlturaCenActionPerformed
-        
-//        String alturaCen = insertAlturaCen.getText();
-//        int altura = Integer.parseInt(alturaCen);
-//        config.setHeight(altura);
-         
+
+
     }//GEN-LAST:event_insertAlturaCenActionPerformed
 
     private void insertLarguraCenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertLarguraCenActionPerformed
-//        String larguraCen = insertLarguraCen.getText();
-//        int largura = Integer.parseInt(larguraCen);
-//        config.setWidth(largura);
+
     }//GEN-LAST:event_insertLarguraCenActionPerformed
 
     private void insertCruzamentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertCruzamentosActionPerformed
-//        String cruzamentos= insertCruzamentos.getText();
-//        
-//        int cruza = Integer.parseInt(cruzamentos);
-//        
-//        jen.setCrossoverSize(cruza);
+
     }//GEN-LAST:event_insertCruzamentosActionPerformed
 
     private void insertIteracoesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertIteracoesActionPerformed
-//        String iteracoes= insertIteracoes.getText();
-//
-//        int itera = Integer.parseInt(iteracoes);
-//        jen.setCrossoverSize(itera);
+
     }//GEN-LAST:event_insertIteracoesActionPerformed
 
     private void insertXPontoInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertXPontoInicialActionPerformed
-        
+
     }//GEN-LAST:event_insertXPontoInicialActionPerformed
 
     private void insertXPontoFinalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertXPontoFinalActionPerformed
@@ -737,9 +715,7 @@ public class Inicial extends javax.swing.JFrame {
     }//GEN-LAST:event_insertXPontoFinalActionPerformed
 
     private void insertSolucoesAleatoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertSolucoesAleatoriasActionPerformed
-//        String solucoesAleatorias= insertSolucoesAleatorias.getText();
-//        int solAl = Integer.parseInt(solucoesAleatorias);
-//        jen.setRandomSize(solAl);
+
     }//GEN-LAST:event_insertSolucoesAleatoriasActionPerformed
 
     private void populacaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_populacaoActionPerformed
@@ -754,7 +730,6 @@ public class Inicial extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_melhorSoluActionPerformed
 
-    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -821,7 +796,6 @@ public class Inicial extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JSlider jSlider1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JLabel larguraCenario;
     private javax.swing.JTextField melhorSolu;
     private javax.swing.JTextField muta;
@@ -829,5 +803,6 @@ public class Inicial extends javax.swing.JFrame {
     private javax.swing.JLabel pontoInicial;
     private javax.swing.JTextField populacao;
     private javax.swing.JTable tabelaObstaculos;
+    private javax.swing.JTextField taxaMuta;
     // End of variables declaration//GEN-END:variables
 }

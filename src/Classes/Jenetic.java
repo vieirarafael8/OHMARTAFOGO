@@ -15,9 +15,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-import javax.swing.JSlider;
 import jenetic.interfaces.IChromosome;
+import jenetic.interfaces.IPoint;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+
+
 
 /**
  *
@@ -36,10 +38,11 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     private List<List<IChromosome>> historic;
     private List<Rectangle> rectangles;
     private Configuration c;
+    private int melhorSolu;
 
 
 
-    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor, List<Rectangle> rectangles, Configuration c) {
+    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor, List<Rectangle> rectangles, Configuration c, int melhorSolu) {
         this.populationSize = populationSize;
         this.randomSize = randomSize;
         this.crossoverSize = crossoverSize;
@@ -50,8 +53,16 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
         this.historic = new ArrayList<>(populationSize);
         this.rectangles = new ArrayList<>(rectangles);
         this.c=c;
+        this.melhorSolu=melhorSolu;
     }
 
+    public int getMelhorSolu() {
+        return melhorSolu;
+    }
+
+    public void setMelhorSolu(int melhorSolu) {
+        this.melhorSolu = melhorSolu;
+    }
 
 
     public int getPopulationSize() {
@@ -192,20 +203,22 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
         historic.add(population);
 
         iteration = 0;
-
+        PathViewer pathV = new PathViewer(c);
+        
+        
+        
         do
         {
             //aplica operadores apenas aos melhores
             List<IChromosome> best = population.stream()
                                                 .sorted((x, y)->Double.compare(y.getFitness(), x.getFitness()))
-                                                .limit(5)
+                                                .limit(melhorSolu)
                                                 .collect(Collectors.toList());
 
             List<IChromosome> offspring = mutate(best);
             offspring.addAll(cross(best));
             //offspring.addAll(heredity(best));
             offspring.addAll(random());
-
 
             best.addAll(offspring);
 
@@ -214,10 +227,16 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
             population = offspring;
 
             historic.add(population);
-
-         
+            
+            IChromosome chromo = getFittest(population);
+            pathV.paintPath(chromo.getGenes().stream().map(x -> (IPoint) x).collect(Collectors.toList()));
+            pathV.setFitness(chromo.getFitness());
+            pathV.setStringPath(chromo.toString());
+            
             iteration++;
         }while(!canStop());
+        IChromosome chromo = getFittest(population);
+        System.out.println(chromo.toString());
 
         return iteration;
    
