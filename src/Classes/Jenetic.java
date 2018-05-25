@@ -11,6 +11,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
@@ -39,10 +40,11 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     private List<Rectangle> rectangles;
     private Configuration c;
     private int melhorSolu;
+    private int tamHeredity;
 
 
 
-    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor, List<Rectangle> rectangles, Configuration c, int melhorSolu) {
+    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor, List<Rectangle> rectangles, Configuration c, int melhorSolu, int tamHeredity) {
         this.populationSize = populationSize;
         this.randomSize = randomSize;
         this.crossoverSize = crossoverSize;
@@ -54,7 +56,17 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
         this.rectangles = new ArrayList<>(rectangles);
         this.c=c;
         this.melhorSolu=melhorSolu;
+        this.tamHeredity= tamHeredity;
     }
+
+    public int getTamHeredity() {
+        return tamHeredity;
+    }
+
+    public void setTamHeredity(int tamHeredity) {
+        this.tamHeredity = tamHeredity;
+    }
+    
 
     public int getMelhorSolu() {
         return melhorSolu;
@@ -145,7 +157,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     
     @Override
     public List<IChromosome> initialize() {
-        return Stream.generate(() -> new Cromossoma(1, 1, c)).limit(populationSize).collect(Collectors.toList());
+       return Stream.generate(() -> new Cromossoma(2, 15, c)).limit(populationSize).collect(Collectors.toList());
              
     }
 
@@ -171,7 +183,9 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
 
     @Override
     public List<IChromosome> heredity(List<IChromosome> list) {
-       throw new NotImplementedException();
+       return Stream.generate(() -> getRandomChromosome(list).heredity())
+                .limit(tamHeredity)
+                .collect(Collectors.toList());
 
     }
 
@@ -185,9 +199,9 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
 
     @Override
     public List<IChromosome> selection(List<IChromosome> list) {
-        return list.stream().sorted((x, y)->Double.compare(y.getFitness(), x.getFitness()))
-                                .limit(populationSize)
-                                .collect(Collectors.toList());
+        return list.stream().sorted(Comparator.comparingDouble(IChromosome::getFitness))
+                .limit(populationSize)
+                .collect(Collectors.toList());
     
     }
 
@@ -204,9 +218,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
 
         iteration = 0;
         PathViewer pathV = new PathViewer(c);
-        
-        
-        
+
         do
         {
             //aplica operadores apenas aos melhores
@@ -228,10 +240,10 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
 
             historic.add(population);
             
-            IChromosome chromo = getFittest(population);
-            pathV.paintPath(chromo.getGenes().stream().map(x -> (IPoint) x).collect(Collectors.toList()));
-            pathV.setFitness(chromo.getFitness());
-            pathV.setStringPath(chromo.toString());
+            IChromosome crmo = getFittest(population);
+            pathV.paintPath(crmo.getGenes().stream().map(x -> (IPoint) x).collect(Collectors.toList()));
+            pathV.setFitness(crmo.getFitness());
+            pathV.setStringPath(crmo.toString());
             
             iteration++;
         }while(!canStop());
@@ -245,9 +257,8 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
  
     @Override
     public IChromosome getFittest(List<IChromosome> list) {
-               return list.stream().sorted((x,y)->Double.compare(y.getFitness(), x.getFitness())).findFirst().get();
-  
-       
+               return list.stream().sorted((x, y) -> Double.compare(y.getFitness(), x.getFitness())).limit(1).collect(Collectors.toList()).get(0);
+ 
     }
 
     @Override

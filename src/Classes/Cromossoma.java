@@ -34,9 +34,10 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
         genes = new ArrayList<>();
         IPoint init = c.getStart();
         IPoint end = c.getEnd();
-        IGene geneI = new Gene((Point) init,c);
-        IGene geneF = new Gene((Point) end,c);
+        IGene geneI = new Gene((Point) init, c);
         IGene geneale =new Gene(c);
+        IGene geneF = new Gene((Point) end, c);
+       
         genes.add(geneI);
 
         this.genes=XPath();
@@ -47,7 +48,7 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
         int pos=1;
         if(existeObstaculos(c.getStart(), c.getEnd())){
             int x = c.getStart().getX(), y= c.getStart().getY();
-            
+            A:
             do{
                 Gene g = new Gene(c);
                 genes.add(g);
@@ -56,7 +57,7 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
                     Gene gg = (Gene) genes.get(j);
                     if(existeObstaculos(new Point(x, y), new Point(gg.getX(), gg.getY()))){
                         genes.remove(genes.size()-1);
-                        
+                        break;
                     }
                     pos++;
                     
@@ -65,7 +66,7 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
                     
                     if(j==genes.size()-1 && !existeObstaculos(new Point(x, y), c.getEnd())){
                         genes.add(new Gene((Point) c.getEnd(), c));
-                        
+                        break A;
                     }
                 }
                 
@@ -87,20 +88,13 @@ public class Cromossoma implements jenetic.interfaces.IChromosome, Comparable<Cr
 
    
 
-    private Cromossoma(Cromossoma aThis, Configuration c) {
-        this.maxSize=aThis.maxSize;
-        this.minSize=aThis.minSize;
-       this.genes = aThis.getGenes();
-       this.c=c;
+    private Cromossoma(Cromossoma other, Configuration co) {
+        this.maxSize=other.maxSize;
+        this.minSize=other.minSize;
+       this.genes = other.getGenes();
+       this.c=co;
        
     }
-
-    private Cromossoma(Cromossoma aThis, List<IGene> gene) {
-       this.maxSize = aThis.maxSize;
-       this.minSize = aThis.minSize;
-       this.genes=gene;
-    }
-
 
 
     @Override
