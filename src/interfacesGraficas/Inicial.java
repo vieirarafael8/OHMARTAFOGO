@@ -152,7 +152,15 @@ public class Inicial extends javax.swing.JFrame {
             new String [] {
                 "X", "Y", "Largura", "Altura"
             }
-        ));
+        ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class, java.lang.Integer.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tabelaObstaculos);
 
         jLabel5.setText("Obstáculos:");
@@ -533,10 +541,10 @@ public class Inicial extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         for (int i = 0; i < model.getRowCount(); i++) {
             if ((model.getValueAt(i, 0) != null) && (model.getValueAt(i, 1) != null) && (model.getValueAt(i, 2) != null) && (model.getValueAt(i, 3) != null)) {
-                int x = Integer.parseInt((String) table.getModel().getValueAt(i, 0));
-                int y = Integer.parseInt((String) table.getModel().getValueAt(i, 1));
-                int width = Integer.parseInt((String) table.getModel().getValueAt(i, 2));
-                int height = Integer.parseInt((String) table.getModel().getValueAt(i, 3));
+                int x = (int) table.getModel().getValueAt(i, 0);
+                int y = (int) table.getModel().getValueAt(i, 1);
+                int width = (int) table.getModel().getValueAt(i, 2);
+                int height = (int) table.getModel().getValueAt(i, 3);
 
                 Rectangle rectangle = new Rectangle(x, y, width, height);
                 obstacles.add(rectangle);
