@@ -145,12 +145,12 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
         this.rectangles = rectangles;
     }
 
-    
     @Override
     public String toString() {
-        return "Jenetic{" + "rectangles=" + rectangles + '}';
+        return "Jenetic{" + "populationSize=" + populationSize + ", randomSize=" + randomSize + ", crossoverSize=" + crossoverSize + ", mutationSize=" + mutationSize + ", maxIterations=" + maxIterations + ", mutationFactor=" + mutationFactor + ", iteration=" + iteration + ", historic=" + historic + ", rectangles=" + rectangles + ", c=" + c + ", melhorSolu=" + melhorSolu + ", tamHeredity=" + tamHeredity + '}';
     }
-    
+
+
     @Override
     public List<IChromosome> initialize() {
        return Stream.generate(() -> new Cromossoma(2, 15, c)).limit(populationSize).collect(Collectors.toList());
@@ -244,6 +244,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
             iteration++;
         }while(!canStop());
         IChromosome chromo = getFittest(population);
+        
         System.out.println(chromo.toString());
 
         return iteration;

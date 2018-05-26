@@ -75,6 +75,11 @@ public class Configuration implements jenetic.interfaces.IUIConfiguration {
         this.pFinal = ipoint;
     }
 
+    @Override
+    public String toString() {
+        return "Configuration{" + "width=" + width + ", height=" + height + ", obs=" + obs + ", pInit=" + pInit + ", pFinal=" + pFinal + '}';
+    }
+
 
     
 }
