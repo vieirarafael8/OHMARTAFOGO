@@ -7,6 +7,7 @@ package interfacesGraficas;
 
 import Classes.Configuration;
 import Classes.Jenetic;
+import Classes.Maps;
 import Classes.Point;
 import java.awt.Rectangle;
 import java.awt.event.ItemEvent;
@@ -14,6 +15,8 @@ import java.awt.event.ItemListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -23,6 +26,7 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+import jenetic.interfaces.IUIConfiguration;
 
 /**
  *
@@ -669,7 +673,19 @@ public class Inicial extends javax.swing.JFrame {
             if (melhorSolu.getText().equals("")) {
                 JOptionPane.showMessageDialog(this, "Introduza o numero de melhores Soluções!!");
             }
-Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu, here);
+
+            try {
+                IUIConfiguration u = Maps.getMap(0);
+                List<Rectangle> rec = u.getObstacles();
+                int alt = u.getHeight();
+                int larg = u.getWidth();
+                Jenetic j = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, rec, (Configuration) u, mSolu, here);
+                j.run();
+            } catch (Exception ex) {
+                Logger.getLogger(Inicial.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu, here);
+           
 
         jen1.run();
         } else {

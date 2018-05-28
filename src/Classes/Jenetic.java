@@ -55,6 +55,23 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
         this.tamHeredity= tamHeredity;
     }
 
+    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor, int iteration, List<Rectangle> rectangles, Configuration c, int melhorSolu, int tamHeredity) {
+        this.populationSize = populationSize;
+        this.randomSize = randomSize;
+        this.crossoverSize = crossoverSize;
+        this.mutationSize = mutationSize;
+        this.maxIterations = maxIterations;
+        this.mutationFactor = mutationFactor;
+        this.iteration = iteration;
+        this.historic = historic;
+        this.rectangles = rectangles;
+        this.c = c;
+        this.melhorSolu = melhorSolu;
+        this.tamHeredity = tamHeredity;
+    }
+    
+    
+
     public int getTamHeredity() {
         return tamHeredity;
     }
@@ -214,6 +231,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
 
         iteration = 0;
         PathViewer pathV = new PathViewer(c);
+        
 
         do
         {
