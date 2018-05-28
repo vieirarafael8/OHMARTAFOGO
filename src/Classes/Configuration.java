@@ -27,6 +27,7 @@ public class Configuration implements jenetic.interfaces.IUIConfiguration {
         this.obs = obs;
         this.pInit = pInit;
         this.pFinal = pFinal;
+        System.out.println("ESTA NO CONFIGURATION");
     }
 
     public int getWidth() {
@@ -45,6 +46,15 @@ public class Configuration implements jenetic.interfaces.IUIConfiguration {
         this.height = height;
     }
 
+    public List<Rectangle> getObs() {
+        return obs;
+    }
+
+    public void setObs(List<Rectangle> obs) {
+        this.obs = obs;
+    }
+
+ 
     @Override
     public List<Rectangle> getObstacles() {
         return obs;
@@ -75,11 +85,6 @@ public class Configuration implements jenetic.interfaces.IUIConfiguration {
         this.pFinal = ipoint;
     }
 
-    @Override
-    public String toString() {
-        return "Configuration{" + "width=" + width + ", height=" + height + ", obs=" + obs + ", pInit=" + pInit + ", pFinal=" + pFinal + '}';
-    }
-
-
+  
     
 }

@@ -26,7 +26,10 @@ import javax.swing.JTextField;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.table.DefaultTableModel;
+import Classes.InvalidArgumentException;
 import jenetic.interfaces.IUIConfiguration;
+import jenetic.interfaces.UIConfiguration;
+        
 
 /**
  *
@@ -34,6 +37,9 @@ import jenetic.interfaces.IUIConfiguration;
  */
 public class Inicial extends javax.swing.JFrame {
 
+    
+    private static long time;
+    
     /**
      * Creates new form Inicial
      */
@@ -545,6 +551,13 @@ public class Inicial extends javax.swing.JFrame {
         return obstacles;
 
     }
+    
+    private static void inicioProg() { time= (System.currentTimeMillis() * 60);
+        System.out.println("\nCOMEÇOU\n");
+    }
+    private static void fimProg() {
+        System.out.println("\nACABOU\n"+"Tempo: " + (((System.currentTimeMillis())*60) - time) + "segundos");
+    }
 
     private void checkBox(boolean aparece) {
 
@@ -629,15 +642,14 @@ public class Inicial extends javax.swing.JFrame {
 
     
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Configuration configg = new Configuration(Integer.parseInt(insertLarguraCen.getText()), Integer.parseInt(insertAlturaCen.getText()), TratarRect(), criarPontoInicial(), criarPontoFinal());
+//        Configuration configg = new Configuration(Integer.parseInt(insertLarguraCen.getText()), Integer.parseInt(insertAlturaCen.getText()), TratarRect(), criarPontoInicial(), criarPontoFinal());
 
-        JCheckBox cb = jCheckBox1;
-
-        if (insertIteracoes.getText().equals("")) {
+  
+        if (insertIteracoes.getText() ==null) {
             JOptionPane.showMessageDialog(this, "Introduza as interações!!");
         }
 
-        if (populacao.getText().equals("")) {
+        if (populacao.getText()==null) {
             JOptionPane.showMessageDialog(this, "Introduza a população!!");
         }
         int ite = Integer.parseInt(insertIteracoes.getText());
@@ -653,42 +665,41 @@ public class Inicial extends javax.swing.JFrame {
         float numMuta = Float.parseFloat(taxaMuta.getText());
         int here = Integer.parseInt(heredity.getText());
 
-        if (cb.isSelected()) {
-            //System.out.println("selecionado!!!!!!");
-            //se escolher editar solucoes...
-            if (insertSolucoesAleatorias.getText().equals("")) {
+        if (jCheckBox1.isSelected()) {
+         
+            if (insertSolucoesAleatorias.getText()==null) {
                 JOptionPane.showMessageDialog(this, "Introduza o numero de Soluções aleatorias!!");
             }
 
-            if (insertCruzamentos.getText().equals("")) {
+            if (insertCruzamentos.getText()==null) {
                 JOptionPane.showMessageDialog(this, "Introduza o numero de cruzamentos!!");
             }
-            if (muta.getText().equals("")) {
+            if (muta.getText()==null) {
                 JOptionPane.showMessageDialog(this, "Introduza o numero de iterações!!");
             }
-             if (heredity.getText().equals("")) {
+             if (heredity.getText()==null) {
                 JOptionPane.showMessageDialog(this, "Introduza o numero de hereditariedade!!");
             }
 
-            if (melhorSolu.getText().equals("")) {
+            if (melhorSolu.getText()==null) {
                 JOptionPane.showMessageDialog(this, "Introduza o numero de melhores Soluções!!");
             }
-
-            try {
-                IUIConfiguration u = Maps.getMap(0);
-                List<Rectangle> rec = u.getObstacles();
-                int alt = u.getHeight();
-                int larg = u.getWidth();
-                Jenetic j = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, rec, (Configuration) u, mSolu, here);
+                
+        try {
+              IUIConfiguration config = Maps.getMap(0);
+            
+                Jenetic j = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, config, mSolu, here);
+               inicioProg();
                 j.run();
-            } catch (Exception ex) {
-                Logger.getLogger(Inicial.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu, here);
-           
+                fimProg();
+            
+        } catch (InvalidArgumentException ex) {
+            Logger.getLogger(Inicial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
 
-        jen1.run();
         } else {
+            
             int soma = (int) (sol + cruz + mutaaa + mSolu + here);
 
             if (soma <= popul) {
@@ -699,9 +710,18 @@ public class Inicial extends javax.swing.JFrame {
                 mSolu = div;
                 here=div;
             }
-            Jenetic jen1 = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, TratarRect(), configg, mSolu, here);
-
-        jen1.run();
+                    
+        try {
+             IUIConfiguration config = Maps.getMap(0);
+            
+                Jenetic j = new Jenetic(popul, sol, cruz, mutaaa, ite, numMuta, config, mSolu, here);
+                inicioProg();
+                j.run();
+                fimProg();
+        } catch (InvalidArgumentException ex) {
+            Logger.getLogger(Inicial.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         }
 
          

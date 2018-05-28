@@ -14,6 +14,8 @@ import java.util.Random;
 import jenetic.interfaces.IChromosome;
 import jenetic.interfaces.IGene;
 import jenetic.interfaces.IPoint;
+import jenetic.interfaces.IUIConfiguration;
+import jenetic.interfaces.UIConfiguration;
 
 /**
  *
@@ -24,62 +26,54 @@ public final class Cromossoma implements jenetic.interfaces.IChromosome, Compara
     private int maxSize;
     private int minSize;
     private List<IGene> genes;
-    private Configuration c;
+    private IUIConfiguration c;
 
-    public Cromossoma(int maxSize, int minSize, Configuration c) {
+    public Cromossoma(int maxSize, int minSize, IUIConfiguration c) {
         this.c =c;
         this.maxSize = maxSize;
         this.minSize = minSize;
-        
-        genes = new ArrayList<>();
-        IPoint init = c.getStart();
-        IPoint end = c.getEnd();
-        IGene geneI = new Gene((Point) init, c);
-        IGene geneale =new Gene(c);
-        IGene geneF = new Gene((Point) end, c);
-       
-        genes.add(geneI);
-
+        do{
         this.genes=XPath();
+        }while(this.genes==null);
+        System.out.println(genes.toString());
+        System.out.println("ESTA NO CROMOSSOMA" +isValid());
         
     }
     
     public List<IGene> XPath(){
-        int pos=1;
-        if(existeObstaculos(c.getStart(), c.getEnd())){
-            int x = c.getStart().getX();
-            int y= c.getStart().getY();
-            A:
+        List<IGene> pg = new ArrayList<>();
+        Gene st = new Gene(c.getHeight(), c.getWidth());
+        Gene fn = new Gene(c.getHeight(), c.getWidth());
+        
+        do{
+        pg = new ArrayList<>();
+        pg.add(st);
+        boolean vl = false;
             do{
-                Gene g = new Gene(c);
-                genes.add(g);
-                
-                for(int j=pos; j<genes.size(); j++){
-                    Gene gg = (Gene) genes.get(j);
-                    if(existeObstaculos(new Point(x, y), new Point(gg.getX(), gg.getY()))){
-                        genes.remove(genes.size()-1);
-                        break;
-                    }
-                    pos++;
-                    
-                    x= gg.getX();
-                    y=gg.getY();
-                    
-                    if(j==genes.size()-1 && !existeObstaculos(new Point(x, y), c.getEnd())){
-                        genes.add(new Gene((Point) c.getEnd(), c));
-                        break A;
+                vl=false;
+                Gene g = new Gene(c.getHeight(), c.getWidth());
+                Gene ug = (Gene) pg.get(pg.size()-1);
+                if(!existeObstaculos(ug.getP(), g)){
+                    pg.add(g);
+                    if(!existeObstaculos(g.getP(), g)){
+                        pg.add(fn);
+                        vl=true;
                     }
                 }
                 
-            }while(!genes.get(genes.size()-1).equals(c.getEnd()));
-        }else{
-            genes.add(new Gene((Point) c.getEnd(), c));
+                }while(!vl);
+        }while(pg.size()>this.maxSize);
+        if(pg.size()<minSize){
+            return null;
         }
-        return genes;
+        else{
+            return pg;
+        }
+        
     }
     
 
-    public Cromossoma(Cromossoma other, List<IGene> genes, Configuration c) {
+    public Cromossoma(Cromossoma other, List<IGene> genes, IUIConfiguration c) {
         this.maxSize = other.maxSize;
         this.minSize = other.minSize;
         this.genes = genes;
@@ -89,7 +83,7 @@ public final class Cromossoma implements jenetic.interfaces.IChromosome, Compara
 
    
 
-    private Cromossoma(Cromossoma other, Configuration co) {
+    private Cromossoma(Cromossoma other, IUIConfiguration co) {
         this.maxSize=other.maxSize;
         this.minSize=other.minSize;
        this.genes = other.getGenes();
@@ -98,36 +92,56 @@ public final class Cromossoma implements jenetic.interfaces.IChromosome, Compara
     }
 
 
-    @Override
+  @Override
     public IChromosome mutate(double d) {
-        
         List<IGene> newGenes = new ArrayList<>();
-        
-        int limit =0;
-        int count=0;
-        
-        do{
-            for(int i=1;i<genes.size()-1;i++){
-                if(count<1){
-                    IPoint p = ((Gene)this.genes.get(i)).getP();
-                    double dif = (int) d * new Random().nextDouble();
-                    if(new Random().nextDouble()>0.5){
+        Gene start = new Gene(c.getStart().getY(), c.getStart().getX());
+        Gene end = new Gene(c.getEnd().getY(), c.getEnd().getX());
+        boolean valid = false;
+        do {
+            do {
+                newGenes = new ArrayList<>();
+                newGenes.add(start);
+                valid = false;
+                int cont = 1;
+                for (int i = 1; i < genes.size() - 1; i++) {
+                    valid = false;
+                    IPoint p = ((Gene) this.genes.get(i)).getP();
+                    double r = new Random().nextDouble();
+                    double dif = d * r;
+                    if (r > 0.5) {
                         dif *= -1;
                     }
-                    int x = (int) (p.getX()+dif);
-                    int y = (int) (p.getY()+dif);
-                    IPoint newPoint = new Point(x, y);
-                    Gene newGene = new Gene((Point) newPoint, c);
-                    newGenes.add(newGene);
-                    count++;
+                    int x = (int) ((int) p.getX() + dif);
+                    int y = (int) ((int) p.getY() + dif);
+                    IPoint newP = new Point(x, y);
+                    Gene newG = new Gene(newP.getY(), newP.getX());
+                    Gene lastGene = ((Gene) newGenes.get(cont - 1));
+                    if (!existeObstaculos(lastGene.getP(), newG.getP())) {
+                        newGenes.add(newG);
+                        cont++;
+                        if (!existeObstaculos(newG.getP(), end.getP())) {
+                            newGenes.add(end);
+                            valid = true;
+                            cont++;
+                        }
+                    } else if (!existeObstaculos(lastGene.getP(), ((Gene) this.genes.get(i)).getP())) {
+                        newGenes.add(((Gene) this.genes.get(i)));
+                        cont++;
+                        if (!existeObstaculos(newG.getP(), end.getP())) {
+                            newGenes.add(end);
+                            valid = true;
+                            cont++;
+                        }
+                    }
                 }
-            }
-            
+            } while (!valid);
+        } while (newGenes.size() > this.maxSize);
+        if (newGenes.size() < minSize) {
+            return null;
+        } else {
+            return new Cromossoma(this, newGenes, c);
         }
-        while(!isValid() && limit++ <30);
-        
-        return new Cromossoma(this,newGenes, c);
-       
     }
 
     @Override
@@ -142,7 +156,7 @@ public final class Cromossoma implements jenetic.interfaces.IChromosome, Compara
              int x = ((point.getX() + ip.getX())/2);
              int y = ((point.getY() + ip.getY())/2);
              IPoint pm = new Point(x, y);
-             IGene ge = new Gene( (Point) pm, c);
+             IGene ge = new Gene(c.getHeight(), c.getWidth());
              newGenes.add(ge);
          } while(!isValid()&&limit++ <30); 
          
@@ -158,15 +172,7 @@ public final class Cromossoma implements jenetic.interfaces.IChromosome, Compara
    
     }
 
-    @Override
-    public List<IGene> getGenes() {
-        return genes;
-        
-    }
-
-    public void setGenes(List<IGene> genes) {
-        this.genes = genes;
-    }
+  
     
     private boolean existeObstaculos(IPoint a, IPoint b){
         Iterator<Rectangle> ite = c.getObstacles().iterator();
@@ -181,7 +187,8 @@ public final class Cromossoma implements jenetic.interfaces.IChromosome, Compara
     }    
     @Override
     public boolean isValid() {
-        if(!genes.stream().allMatch(x -> x.isValid())){
+        boolean estado = genes.stream().allMatch(x -> x.isValid());
+        if(!estado){
             return false;
         }
         for(int i=0;i<genes.size()-1;i++){
@@ -195,7 +202,7 @@ public final class Cromossoma implements jenetic.interfaces.IChromosome, Compara
 
     @Override
     public boolean isValid(IChromosome ic) {
-        return ic.getGenes().stream().map(x -> (Gene)x).allMatch(g -> g.getP().getX() >= -c.getWidth() & g.getP().getX() <= c.getWidth());
+        return ic.getGenes().stream().allMatch(x -> x.isValid());
        
     }
 
@@ -218,38 +225,44 @@ public final class Cromossoma implements jenetic.interfaces.IChromosome, Compara
     }
 
     public int getMaxSize() {
-        
         return maxSize;
     }
 
     public void setMaxSize(int maxSize) {
-        
         this.maxSize = maxSize;
     }
 
     public int getMinSize() {
-        
         return minSize;
     }
 
     public void setMinSize(int minSize) {
-        
         this.minSize = minSize;
     }
 
-    public Configuration getC() {
-        
+    public List<IGene> getGenes() {
+        return genes;
+    }
+
+    public void setGenes(List<IGene> genes) {
+        this.genes = genes;
+    }
+
+    public IUIConfiguration getC() {
         return c;
     }
 
-    public void setC(Configuration c) {
+    public void setC(IUIConfiguration c) {
         this.c = c;
     }
 
+
+   
     @Override
     public String toString() {
         return "Cromossoma{" + "maxSize=" + maxSize + ", minSize=" + minSize + ", genes=" + genes + ", c=" + c + '}';
     }
+
 
     @Override
     public int compareTo(Cromossoma t) {

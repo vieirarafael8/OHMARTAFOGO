@@ -13,11 +13,15 @@ import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Objects;
+import static java.util.Objects.nonNull;
 import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import jenetic.interfaces.IChromosome;
 import jenetic.interfaces.IPoint;
+import jenetic.interfaces.IUIConfiguration;
+
 
 
 
@@ -35,12 +39,12 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     private double mutationFactor;
     private int iteration;
     private List<List<IChromosome>> historic;
-    private List<Rectangle> rectangles;
-    private Configuration c;
+    private IUIConfiguration c;
     private int melhorSolu;
     private int tamHeredity;
 
-    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor, List<Rectangle> rectangles, Configuration c, int melhorSolu, int tamHeredity) {
+
+    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor, IUIConfiguration c, int melhorSolu, int tamHeredity) {
         this.populationSize = populationSize;
         this.randomSize = randomSize;
         this.crossoverSize = crossoverSize;
@@ -48,47 +52,13 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
         this.maxIterations = maxIterations;
         this.mutationFactor = mutationFactor;
         this.iteration = 0;
-        this.historic = new ArrayList<>(populationSize);
-        this.rectangles = new ArrayList<>(rectangles);
-        this.c=c;
-        this.melhorSolu=melhorSolu;
-        this.tamHeredity= tamHeredity;
-    }
-
-    public Jenetic(int populationSize, int randomSize, int crossoverSize, int mutationSize, int maxIterations, double mutationFactor, int iteration, List<Rectangle> rectangles, Configuration c, int melhorSolu, int tamHeredity) {
-        this.populationSize = populationSize;
-        this.randomSize = randomSize;
-        this.crossoverSize = crossoverSize;
-        this.mutationSize = mutationSize;
-        this.maxIterations = maxIterations;
-        this.mutationFactor = mutationFactor;
-        this.iteration = iteration;
-        this.historic = historic;
-        this.rectangles = rectangles;
-        this.c = c;
+        this.historic=new ArrayList<>(populationSize);
+        this.c =c;
         this.melhorSolu = melhorSolu;
         this.tamHeredity = tamHeredity;
+        
+        
     }
-    
-    
-
-    public int getTamHeredity() {
-        return tamHeredity;
-    }
-
-    public void setTamHeredity(int tamHeredity) {
-        this.tamHeredity = tamHeredity;
-    }
-    
-
-    public int getMelhorSolu() {
-        return melhorSolu;
-    }
-
-    public void setMelhorSolu(int melhorSolu) {
-        this.melhorSolu = melhorSolu;
-    }
-
 
     public int getPopulationSize() {
         return populationSize;
@@ -154,24 +124,44 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
         this.historic = historic;
     }
 
-    public List getRectangles() {
-        return rectangles;
+    public IUIConfiguration getC() {
+        return c;
     }
 
-    public void setRectangles(List rectangles) {
-        this.rectangles = rectangles;
+    public void setC(IUIConfiguration c) {
+        this.c = c;
     }
+
+    public int getMelhorSolu() {
+        return melhorSolu;
+    }
+
+    public void setMelhorSolu(int melhorSolu) {
+        this.melhorSolu = melhorSolu;
+    }
+
+    public int getTamHeredity() {
+        return tamHeredity;
+    }
+
+    public void setTamHeredity(int tamHeredity) {
+        this.tamHeredity = tamHeredity;
+    }
+
+  
+
 
     @Override
     public String toString() {
-        return "Jenetic{" + "populationSize=" + populationSize + ", randomSize=" + randomSize + ", crossoverSize=" + crossoverSize + ", mutationSize=" + mutationSize + ", maxIterations=" + maxIterations + ", mutationFactor=" + mutationFactor + ", iteration=" + iteration + ", historic=" + historic + ", rectangles=" + rectangles + ", c=" + c + ", melhorSolu=" + melhorSolu + ", tamHeredity=" + tamHeredity + '}';
+        return "Jenetic{" + "populationSize=" + populationSize + ", randomSize=" + randomSize + ", crossoverSize=" + crossoverSize + ", mutationSize=" + mutationSize + ", maxIterations=" + maxIterations + ", mutationFactor=" + mutationFactor + ", iteration=" + iteration + ", historic=" + historic + ", c=" + c + ", melhorSolu=" + melhorSolu + ", tamHeredity=" + tamHeredity + '}';
     }
-
+    
+   
 
     @Override
     public List<IChromosome> initialize() {
-       return Stream.generate(() -> new Cromossoma(2, 15, c)).limit(populationSize).collect(Collectors.toList());
-             
+        return Stream.generate(() -> new Cromossoma(15, 2, c)).limit(populationSize).filter(Objects::nonNull).collect(Collectors.toList());
+     
     }
 
     private IChromosome getRandomChromosome(List<IChromosome> parents)
@@ -181,15 +171,15 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     @Override
     public List<IChromosome> cross(List<IChromosome> list) {
         return Stream.generate(() -> getRandomChromosome(list).cross(getRandomChromosome(list)))
-                .limit(crossoverSize)
+                .limit(crossoverSize).filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
     }
 
     @Override
     public List<IChromosome> mutate(List<IChromosome> list) {
-        return Stream.generate(() -> getRandomChromosome(list).mutate(1))
-                .limit(mutationSize)
+        return Stream.generate(() -> getRandomChromosome(list).mutate(mutationFactor))
+                .limit(mutationSize).filter(Objects::nonNull)
                 .collect(Collectors.toList());
         
     }
@@ -197,15 +187,15 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     @Override
     public List<IChromosome> heredity(List<IChromosome> list) {
        return Stream.generate(() -> getRandomChromosome(list).heredity())
-                .limit(tamHeredity)
+                .limit(tamHeredity).filter(Objects::nonNull)
                 .collect(Collectors.toList());
 
     }
 
     @Override
     public List<IChromosome> random() {
-        return Stream.generate(() -> ((IChromosome) new Cromossoma(1,1, c)))
-                        .limit(randomSize)
+        return Stream.generate(() -> ((IChromosome) new Cromossoma(15,2, c)))
+                        .limit(randomSize).filter(Objects::nonNull)
                         .collect(Collectors.toList());
         
     }
@@ -213,7 +203,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
     @Override
     public List<IChromosome> selection(List<IChromosome> list) {
         return list.stream().sorted(Comparator.comparingDouble(IChromosome::getFitness))
-                .limit(populationSize)
+                .limit(populationSize).filter(Objects::nonNull)
                 .collect(Collectors.toList());
     
     }
@@ -232,37 +222,37 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
         iteration = 0;
         PathViewer pathV = new PathViewer(c);
         
-
         do
         {
             //aplica operadores apenas aos melhores
             List<IChromosome> best = population.stream()
-                                                .sorted((x, y)->Double.compare(y.getFitness(), x.getFitness()))
-                                                .limit(melhorSolu)
+                                                .sorted((x, y)->Double.compare(x.getFitness(), y.getFitness()))
+                                                .limit(melhorSolu).filter(Objects::nonNull)
                                                 .collect(Collectors.toList());
 
             List<IChromosome> offspring = mutate(best);
+            
             offspring.addAll(cross(best));
             offspring.addAll(heredity(best));
             offspring.addAll(random());
-
+            
             best.addAll(offspring);
-
-            //System.out.println(best.size());
-
+        
             population = selection(offspring);
 
             historic.add(population);
             
             IChromosome crmo = getFittest(population);
+            System.out.println(crmo.getGenes().toString());
+            
             pathV.paintPath(crmo.getGenes().stream().map(x -> (IPoint) x).collect(Collectors.toList()));
             pathV.setFitness(crmo.getFitness());
             pathV.setStringPath(crmo.toString());
             
             iteration++;
-        }while(!canStop());
-        IChromosome chromo = getFittest(population);
+        } while (!canStop());
         
+        IChromosome chromo = getFittest(population);
         System.out.println(chromo.toString());
 
         return iteration;
@@ -272,7 +262,7 @@ public class Jenetic implements jenetic.interfaces.IJenetic{
  
     @Override
     public IChromosome getFittest(List<IChromosome> list) {
-               return list.stream().sorted((x, y) -> Double.compare(y.getFitness(), x.getFitness())).limit(1).collect(Collectors.toList()).get(0);
+               return list.stream().sorted((x, y) -> Double.compare(x.getFitness(), y.getFitness())).limit(1).collect(Collectors.toList()).get(0);
  
     }
 

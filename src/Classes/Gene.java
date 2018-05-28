@@ -7,6 +7,8 @@ package Classes;
 
 import java.util.Random;
 import jenetic.interfaces.IPoint;
+import jenetic.interfaces.IUIConfiguration;
+import jenetic.interfaces.UIConfiguration;
 
 /**
  *
@@ -15,62 +17,70 @@ import jenetic.interfaces.IPoint;
 public class Gene implements jenetic.interfaces.IGene, jenetic.interfaces.IPoint{
 
     private IPoint p;
-    private Configuration c;
+    private int height, width;
 
     
-    public Gene(Point p, Configuration c) {
+ 
+
+    public Gene(IPoint p, int height, int width) {
         this.p = p;
-        this.c=c;
+        this.height = height;
+        this.width = width;
     }
 
-    public Gene(Configuration c) {
-        do{
-        this.c = c;
-        int minX = c.getStart().getX();
-        int maxX = c.getEnd().getX();
-        int minY = c.getStart().getY();
-        int maxY = c.getEnd().getY();
-        int x = new Random().nextInt(maxX+1-minX)+minX;
-        int y = new Random().nextInt(maxY+1-minY)+minY;
+    
+    public Gene(int height, int width) {
+        this.height = height;
+        this.width = width;
+  
+        int x = new Random().nextInt(width);
+        int y = new Random().nextInt(height);
       
         this.p = new Point(x, y);
-        }while(!isValid());
         
-    
+        System.out.println(p.toString());
+        
+        
         }
     
     @Override
     protected Object clone(){
-        return new Gene((Point) this.p,c);
+        return new Gene(this.p, this.height, this.width);
     }
 
-    @Override
-    public String toString() {
-        return "Gene{" + "p=" + p + ", c=" + c + '}';
-    }
 
     
     @Override
     public boolean isValid() {
-        return true;
-       
+      
+       return (p.getX() >= 0 && p.getX() <= this.width && p.getY()>= 0 && p.getY()<=this.height);
     }
 
-    public Point getP() {
-        return (Point) p;
+    public IPoint getP() {
+        return p;
     }
 
-    public void setP(Point p) {
+    public void setP(IPoint p) {
         this.p = p;
     }
 
-    public Configuration getC() {
-        return c;
+    public int getHeight() {
+        return height;
     }
 
-    public void setC(Configuration c) {
-        this.c = c;
+    public void setHeight(int height) {
+        this.height = height;
     }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+ 
 
     @Override
     public int getX() {
@@ -83,4 +93,5 @@ public class Gene implements jenetic.interfaces.IGene, jenetic.interfaces.IPoint
     }
     
     
+       
 }

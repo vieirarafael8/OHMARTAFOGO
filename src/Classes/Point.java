@@ -29,7 +29,7 @@ public class Point implements jenetic.interfaces.IPoint{
 
     @Override
     public int getY() {
-    return y;
+        return y;
     }
 
     public void setX(int x) {

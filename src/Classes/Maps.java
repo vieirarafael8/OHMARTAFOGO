@@ -27,7 +27,7 @@ public class Maps
      * @return the configuration corresponding to n, in the form of a {@link IUIConfiguration}
      * @throws InvalidArgumentException when n is not in the interval [0 .. 10]
      */
-    public static IUIConfiguration getMap(int n) throws Exception
+    public static IUIConfiguration getMap(int n) throws InvalidArgumentException
     {
         UIConfiguration conf;
         List<Rectangle> obst = new ArrayList<>();
@@ -140,7 +140,7 @@ public class Maps
                 conf.setStart(new Point(50, 50));
                 conf.setEnd(new Point(300, 550));
                 break;
-            default: throw new Exception();
+            default: throw new InvalidArgumentException("Argumento inválido");
         }
 
         return conf;
